@@ -52,7 +52,7 @@ function Header() {
           aria-label="Pausa e Paladar — início"
           onClick={() => setOpen(false)}
         >
-          <Wordmark className="h-12 w-40 object-contain" />
+          <Wordmark className="h-16 w-52 object-contain" />
         </a>
         <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
           {nav.map((n) => (
@@ -161,7 +161,7 @@ function Index() {
         <Wrap className="grid items-center gap-12 overflow-hidden py-16 md:grid-cols-[1.05fr_1fr] md:py-24">
           <div>
             <p className="tag text-gold">Cestas, tábuas & carinho</p>
-            <h1 className="mt-6 text-6xl sm:text-7xl lg:text-8xl">
+            <h1 className="mt-6 text-7xl sm:text-8xl lg:text-9xl">
               Um carinho
               <br />
               em forma de <em className="text-gold">presente.</em>
@@ -187,7 +187,7 @@ function Index() {
         <section className="bg-primary py-20 text-primary-foreground" aria-labelledby="manifesto">
           <Wrap>
             <p className="tag text-gold-soft">Um jeito gostoso de presentear</p>
-            <h2 id="manifesto" className="mt-6 max-w-5xl text-4xl sm:text-6xl">
+            <h2 id="manifesto" className="mt-6 max-w-5xl text-5xl sm:text-7xl">
               Tem coisa melhor do que receber uma pausa bonita, cheia de sabores e feita
               especialmente para você?
             </h2>
@@ -198,7 +198,7 @@ function Index() {
             <div className="grid gap-10 md:grid-cols-[1fr_1.2fr]">
               <div>
                 <p className="tag text-gold">01 — A marca</p>
-                <h2 className="mt-4 text-5xl sm:text-6xl">
+                <h2 className="mt-4 text-6xl sm:text-7xl">
                   Pequenos gestos.
                   <br />
                   <em className="text-terracotta">Grandes memórias.</em>
@@ -239,7 +239,7 @@ function Index() {
         <section id="colecoes" className="pb-32 pt-8">
           <Wrap>
             <p className="tag text-gold">02 — Cestas & tábuas</p>
-            <h2 className="mt-4 text-5xl sm:text-6xl">
+            <h2 className="mt-4 text-6xl sm:text-7xl">
               Escolha o seu jeito de <em className="text-gold">celebrar.</em>
             </h2>
             <div className="mt-14 grid gap-8 md:grid-cols-3">
@@ -284,7 +284,7 @@ function Index() {
         <section className="py-32" aria-label="Depoimento">
           <Wrap className="text-center">
             <figure className="mx-auto max-w-3xl">
-              <blockquote className="font-display text-3xl italic sm:text-5xl">
+              <blockquote className="font-display text-4xl italic sm:text-6xl">
                 “A cesta chegou linda, cheirosa e com tudo que lembrava a minha mãe. Foi o presente
                 mais especial.”
               </blockquote>
@@ -301,7 +301,7 @@ function Index() {
           <Wrap className="grid items-center gap-12 md:grid-cols-[.95fr_1.05fr]">
             <div>
               <p className="tag text-gold-soft">04 — Encomendas</p>
-              <h2 className="mt-4 text-5xl sm:text-6xl">
+              <h2 className="mt-4 text-6xl sm:text-7xl">
                 Você imagina.
                 <br />
                 <em className="text-gold-soft">A gente monta.</em>
@@ -351,7 +351,7 @@ function Index() {
       <footer id="contato" className="py-16">
         <Wrap className="grid gap-10 md:grid-cols-2">
           <div>
-            <Wordmark className="w-56" />
+            <Wordmark className="w-72" />
             <p className="mt-4 max-w-xs text-muted-foreground">
               Um convite para celebrar alguém — inclusive você.
             </p>

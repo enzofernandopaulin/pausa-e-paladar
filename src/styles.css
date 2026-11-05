@@ -39,15 +39,15 @@
 @layer base {
   html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
   * { border-color: var(--color-border); }
-  body { background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); overflow-x: hidden; }
+  body { background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); font-size: 1.06rem; overflow-x: hidden; }
   h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.02; }
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
 }
 
-@utility tag { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; }
+@utility tag { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; }
 @utility btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 48px;
-  padding: 0 1.5rem; border-radius: 999px; font-weight: 500; font-size: .95rem; transition: all .3s ease;
+  padding: 0 1.65rem; border-radius: 999px; font-weight: 500; font-size: 1.02rem; transition: all .3s ease;
 }
 @utility lift { transition: transform .4s ease, box-shadow .4s ease;
   &:hover { transform: translateY(-6px) rotate(0deg); box-shadow: 0 24px 40px -24px oklch(0.33 0.06 130 / 45%); } }

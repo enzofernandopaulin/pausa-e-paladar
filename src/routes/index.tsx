@@ -12,7 +12,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { Logo, Wordmark } from "@/components/Logo";
+import { Wordmark } from "@/components/Logo";
 import { HeroArt, BrunchArt, CakeArt, PlateArt } from "@/components/Art";
 
 const title = "Pausa e Paladar — Cestas & tábuas artesanais";
@@ -52,10 +52,7 @@ function Header() {
           aria-label="Pausa e Paladar — início"
           onClick={() => setOpen(false)}
         >
-          <Logo />
-          <span className="font-display text-xl font-semibold">
-            Pausa <span className="text-gold">e</span> Paladar
-          </span>
+          <Wordmark className="h-12 w-40 object-contain" />
         </a>
         <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
           {nav.map((n) => (

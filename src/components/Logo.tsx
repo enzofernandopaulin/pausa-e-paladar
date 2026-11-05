@@ -1,10 +1,7 @@
-import mono from "@/assets/logo_pp.jpg.asset.json";
-import word from "@/assets/logo_pausa_paladar.jpg.asset.json";
-
 export function Logo({ size = 48 }: { size?: number }) {
   return (
     <img
-      src={mono.url}
+      src="/logo-pp.jpeg"
       width={size}
       height={size}
       alt="Logotipo P&P — Pausa & Paladar"
@@ -17,12 +14,12 @@ export function Logo({ size = 48 }: { size?: number }) {
 export function Wordmark({ className = "" }: { className?: string }) {
   return (
     <img
-      src={word.url}
+      src="/logo-wordmark.jpeg"
       width={1080}
       height={1080}
       loading="lazy"
       alt="Pausa & Paladar — Celebre o agora"
-      className={`aspect-[2/1] object-cover ${className}`}
+      className={`object-contain ${className}`}
     />
   );
 }

@@ -13,7 +13,9 @@ import {
   X,
 } from "lucide-react";
 import { Wordmark } from "@/components/Logo";
-import { HeroArt, BrunchArt, CakeArt, PlateArt } from "@/components/Art";
+import { HeroArt, PlateArt } from "@/components/Art";
+import GsapFlipCard from "@/components/ui/gsap-card-flip";
+import { basketItems } from "@/data/basket-images";
 
 const title = "Pausa e Paladar — Cestas & tábuas artesanais";
 const desc =
@@ -106,35 +108,6 @@ function Header() {
   );
 }
 
-const collections = [
-  {
-    t: "Cesta café da manhã",
-    k: "Para começar o dia sorrindo",
-    d: "Pães, doces, frutas e pequenos cuidados reunidos numa cesta feita para surpreender.",
-    p: "A partir de R$ 89",
-    Art: BrunchArt,
-    c: "bg-primary text-primary-foreground",
-    r: "md:-rotate-1",
-  },
-  {
-    t: "Tábua para compartilhar",
-    k: "Feita para abrir e ficar",
-    d: "Queijos, frios, geleias e docinhos escolhidos para transformar qualquer encontro em celebração.",
-    p: "A partir de R$ 119",
-    Art: PlateArt,
-    c: "bg-sage text-primary md:translate-y-12",
-    r: "",
-  },
-  {
-    t: "Caixa de mimos",
-    k: "Um carinho em cada detalhe",
-    d: "Uma seleção afetiva de doces, biscoitos e surpresas para dizer o que às vezes falta em palavras.",
-    p: "Montagem personalizada",
-    Art: CakeArt,
-    c: "bg-paper text-primary border",
-    r: "md:rotate-1",
-  },
-];
 const cares = [
   {
     I: Sparkles,
@@ -242,19 +215,19 @@ function Index() {
             <h2 className="mt-4 text-6xl sm:text-7xl">
               Escolha o seu jeito de <em className="text-gold">celebrar.</em>
             </h2>
-            <div className="mt-14 grid gap-8 md:grid-cols-3">
-              {collections.map(({ t, k, d, p, Art, c, r }) => (
-                <article
-                  key={t}
-                  className={`lift flex flex-col rounded-[var(--radius)] p-8 ${c} ${r}`}
-                >
-                  <Art />
-                  <p className="tag mt-8 opacity-75">{k}</p>
-                  <h3 className="mt-2 text-3xl">{t}</h3>
-                  <p className="mt-3 flex-1 opacity-85">{d}</p>
-                  <p className="tag mt-6 border-t border-current/20 pt-4">{p}</p>
-                </article>
-              ))}
+            <div className="mt-10 min-h-[70vh]">
+              <GsapFlipCard
+                items={basketItems}
+                title="Coleções Pausa e Paladar"
+                meta="Cestas & tábuas artesanais"
+                description="Cada cesta e tábua é montada à mão com ingredientes selecionados. Toque para explorar."
+                rounded={16}
+                stackRotation={2}
+                showCounter={true}
+                backgroundColor="oklch(0.882 0.034 72)"
+                textColor="oklch(0.32 0.06 130)"
+                mutedColor="oklch(0.42 0.04 120)"
+              />
             </div>
           </Wrap>
         </section>

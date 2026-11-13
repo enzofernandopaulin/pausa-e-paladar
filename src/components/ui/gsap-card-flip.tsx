@@ -180,6 +180,7 @@ export default function GsapFlipCard({
   const reducedMotion = usePrefersReducedMotion();
   const [order, setOrder] = useState<number[]>(() => items.map((_, i) => i));
   const [opened, setOpened] = useState(false);
+  const [mobileModalItem, setMobileModalItem] = useState<number | null>(null);
   const [stageWidth, setStageWidth] = useState(0);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -342,6 +343,24 @@ export default function GsapFlipCard({
     onClose?.();
   }, [opened, reducedMotion, orderedCards, duration, ease, onClose]);
 
+  const openMobileModal = useCallback((itemIndex: number) => {
+    setMobileModalItem(itemIndex);
+  }, []);
+
+  const closeMobileModal = useCallback(() => {
+    setMobileModalItem(null);
+  }, []);
+
+  const moveMobileModal = useCallback(
+    (direction: 1 | -1) => {
+      setMobileModalItem((current) => {
+        if (current === null || items.length < 2) return current;
+        return (current + direction + items.length) % items.length;
+      });
+    },
+    [items.length],
+  );
+
   const firstItemIndex = order[0];
   const nextCaption = firstItemIndex !== undefined ? items[firstItemIndex]?.caption : undefined;
   const activeCaption = reducedMotion ? nextCaption : shownCaption;
@@ -421,6 +440,15 @@ export default function GsapFlipCard({
     return () => window.removeEventListener("keydown", onKey);
   }, [order, select, close, opened, items.length]);
 
+  useEffect(() => {
+    if (mobileModalItem === null) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileModalItem]);
+
   if (items.length === 0) return null;
 
   const heroItemIndex = order[0] ?? 0;
@@ -483,7 +511,10 @@ export default function GsapFlipCard({
           )}
 
           {heroItem && (
-            <div
+            <button
+              type="button"
+              onClick={() => openMobileModal(heroItemIndex)}
+              aria-label={`Ampliar imagem: ${heroItem.alt ?? `Imagem ${heroSlotLabel}`}`}
               className="relative w-full flex-1 min-h-[45svh] overflow-hidden bg-[#fafafa] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18),_0_0_0_1px_rgba(0,0,0,0.04)]"
               style={{ borderRadius: rounded }}
             >
@@ -493,7 +524,7 @@ export default function GsapFlipCard({
                 draggable={false}
                 className="absolute inset-0 h-full w-full object-cover rounded-[inherit]"
               />
-            </div>
+            </button>
           )}
 
           <div className="max-[1025px]:pb-[3vh]">
@@ -534,7 +565,7 @@ export default function GsapFlipCard({
                 <button
                   key={item.id ?? itemIndex}
                   type="button"
-                  onClick={() => select(itemIndex)}
+                  onClick={() => openMobileModal(itemIndex)}
                   aria-label={item.alt ?? item.caption ?? `Image ${itemIndex + 1}`}
                   className="relative p-0 border-none overflow-hidden aspect-4/5 w-full bg-[#fafafa] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18),_0_0_0_1px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_40px_80px_-16px_rgba(0,0,0,0.22),_0_0_0_1px_rgba(0,0,0,0.06)] [-webkit-tap-highlight-color:transparent]"
                   style={{ borderRadius: rounded * 0.6 }}
@@ -549,6 +580,68 @@ export default function GsapFlipCard({
               );
             })}
           </div>
+
+          {mobileModalItem !== null && items[mobileModalItem] && (
+            <div
+              className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-[5vw] py-[6vh] backdrop-blur-sm"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Visualização ampliada da cesta"
+              onClick={(event) => {
+                if (event.target === event.currentTarget) closeMobileModal();
+              }}
+            >
+              <div className="relative flex max-h-full w-full max-w-xl flex-col overflow-hidden rounded-[1.25rem] bg-[var(--surface-elevated)] text-[var(--foreground)] shadow-2xl">
+                <button
+                  type="button"
+                  onClick={closeMobileModal}
+                  aria-label="Fechar visualização"
+                  className="absolute right-3 top-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80"
+                >
+                  <span aria-hidden="true" className="text-2xl leading-none">
+                    ×
+                  </span>
+                </button>
+
+                <div className="relative flex min-h-0 items-center justify-center bg-black/10 p-3">
+                  <img
+                    src={items[mobileModalItem].image}
+                    alt={items[mobileModalItem].alt ?? "Imagem da cesta"}
+                    className="max-h-[58svh] w-full rounded-[0.9rem] object-contain"
+                  />
+                </div>
+
+                <div className="space-y-3 overflow-y-auto px-5 pb-5 pt-4">
+                  <p className="text-[0.7rem] uppercase tracking-[0.16em] text-[var(--gold)]">
+                    {String(mobileModalItem + 1).padStart(2, "0")} /{" "}
+                    {String(items.length).padStart(2, "0")}
+                  </p>
+                  <h3 className="font-display text-2xl leading-tight">{title}</h3>
+                  <p className="text-sm leading-relaxed text-[var(--muted-foreground)]">
+                    {items[mobileModalItem].caption ?? items[mobileModalItem].alt}
+                  </p>
+                  <div className="flex items-center justify-between gap-3 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => moveMobileModal(-1)}
+                      className="btn btn-premium-outline btn-sm"
+                      aria-label="Imagem anterior"
+                    >
+                      ← Anterior
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveMobileModal(1)}
+                      className="btn btn-premium btn-sm"
+                      aria-label="Próxima imagem"
+                    >
+                      Próxima →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

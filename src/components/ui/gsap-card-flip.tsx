@@ -583,7 +583,7 @@ export default function GsapFlipCard({
 
           {mobileModalItem !== null && items[mobileModalItem] && (
             <div
-              className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-[5vw] py-[6vh] backdrop-blur-sm"
+              className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/70 px-[5vw] py-4 backdrop-blur-sm"
               role="dialog"
               aria-modal="true"
               aria-label="Visualização ampliada da cesta"
@@ -591,7 +591,7 @@ export default function GsapFlipCard({
                 if (event.target === event.currentTarget) closeMobileModal();
               }}
             >
-              <div className="relative flex max-h-full w-full max-w-xl flex-col overflow-hidden rounded-[1.25rem] bg-[var(--surface-elevated)] text-[var(--foreground)] shadow-2xl">
+              <div className="relative my-auto flex max-h-[calc(100svh-2rem)] w-full max-w-xl flex-col overflow-y-auto rounded-[1.25rem] bg-[var(--surface-elevated)] text-[var(--foreground)] shadow-2xl">
                 <button
                   type="button"
                   onClick={closeMobileModal}
@@ -607,7 +607,7 @@ export default function GsapFlipCard({
                   <img
                     src={items[mobileModalItem].image}
                     alt={items[mobileModalItem].alt ?? "Imagem da cesta"}
-                    className="max-h-[58svh] w-full rounded-[0.9rem] object-contain"
+                    className="max-h-[45svh] w-full rounded-[0.9rem] object-contain"
                   />
                 </div>
 

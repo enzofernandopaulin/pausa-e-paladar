@@ -417,6 +417,15 @@ export default function GsapFlipCard({
     return () => window.removeEventListener("keydown", onKey);
   }, [order, select, close, opened, items.length]);
 
+  useEffect(() => {
+    if (!isMobile || !opened) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMobile, opened]);
+
   if (items.length === 0) return null;
 
   const heroItemIndex = order[0] ?? 0;
@@ -462,85 +471,110 @@ export default function GsapFlipCard({
     return (
       <div
         ref={rootRef}
-        className={`hxs-gsap-flip-card relative w-full min-h-svh overflow-y-auto ${className}`}
+        className={`hxs-gsap-flip-card relative w-full overflow-hidden ${className}`}
         style={{ background: backgroundColor, color: textColor }}
       >
-        <div className="min-h-svh px-[5vw] py-[8vw] flex flex-col gap-[6vw]">
+        <div className="relative grid grid-cols-2 gap-3 p-4 sm:p-6">
           {showCounter && (
-            <div className="text-[3vw] tracking-[0.02em]">
-              <span className="font-semibold">{String(heroSlotLabel).padStart(2, "0")}</span>
-              <span style={{ color: mutedColor }}> / {String(items.length).padStart(2, "0")}</span>
+            <div className="col-span-2 flex items-center justify-between text-xs tracking-[0.08em] uppercase">
+              <span className="font-semibold">Coleções</span>
+              <span style={{ color: mutedColor }}>
+                {String(items.length).padStart(2, "0")} opções
+              </span>
             </div>
           )}
-
-          {heroItem && (
-            <div
-              className="relative w-full flex-1 min-h-[45svh] overflow-hidden bg-[#d8d8d4] shadow-[0_18px_40px_-24px_rgba(0,0,0,0.45)]"
-              style={{ borderRadius: rounded }}
+          {items.map((item, itemIndex) => (
+            <button
+              key={item.id ?? itemIndex}
+              type="button"
+              onClick={() => {
+                setOrder((prev) => [itemIndex, ...prev.filter((index) => index !== itemIndex)]);
+                open();
+              }}
+              aria-label={`Abrir ${item.alt ?? item.caption ?? `imagem ${itemIndex + 1}`}`}
+              className={`relative aspect-[4/3] overflow-hidden border-none bg-[#d8d8d4] p-0 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.45)] [-webkit-tap-highlight-color:transparent] ${itemIndex === 0 ? "col-span-2 aspect-[16/9]" : ""}`}
+              style={{ borderRadius: rounded * 0.7 }}
             >
               <img
-                src={heroItem.image}
-                alt={heroItem.alt ?? ""}
+                src={item.image}
+                alt={item.alt ?? ""}
                 draggable={false}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 active:scale-105"
               />
-            </div>
-          )}
-
-          <div className="max-[1025px]:pb-[3vh]">
-            <h2 className="text-[7vw] max-md:text-[8.5vw] leading-[1.05] m-0 font-normal tracking-[-0.02em]">
-              {title}
-            </h2>
-            <p
-              className="text-[3vw] max-md:text-[3.5vw] mt-[3vw] mb-[4vw]"
-              style={{ color: mutedColor }}
-            >
-              {meta}
-            </p>
-            <p className="text-[3.2vw] max-md:text-[3.8vw] leading-[1.65] m-0">{description}</p>
-            <div
-              className="mt-[5vw] h-[calc(var(--hxs-cap-line)*var(--hxs-cap-lines))] max-md:[--hxs-cap-line:var(--hxs-cap-line-sm)]"
-              style={
-                {
-                  "--hxs-cap-line": CAPTION_MOBILE_LINE,
-                  "--hxs-cap-line-sm": CAPTION_MOBILE_LINE_SM,
-                  "--hxs-cap-lines": captionLines,
-                } as CSSProperties
-              }
-            >
-              <p
-                ref={captionRef}
-                className="text-[3vw] text-left max-md:text-left max-md:w-[80%] max-md:text-[4vw] w-[80%] m-0 leading-normal"
-              >
-                {activeCaption}
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-[3vw]">
-            {order.slice(1).map((itemIndex) => {
-              const item = items[itemIndex];
-              if (!item) return null;
-              return (
-                <button
-                  key={item.id ?? itemIndex}
-                  type="button"
-                  onClick={() => select(itemIndex)}
-                  aria-label={item.alt ?? item.caption ?? `Image ${itemIndex + 1}`}
-                  className="relative p-0 border-none overflow-hidden aspect-4/5 w-full bg-[#d8d8d4] [-webkit-tap-highlight-color:transparent]"
-                  style={{ borderRadius: rounded * 0.6 }}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.alt ?? ""}
-                    draggable={false}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                </button>
-              );
-            })}
-          </div>
+            </button>
+          ))}
+          <p className="col-span-2 m-0 text-center text-sm" style={{ color: mutedColor }}>
+            Toque em uma imagem para ver detalhes
+          </p>
         </div>
+
+        {opened && heroItem && (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(25,30,20,0.78)] p-4 backdrop-blur-sm sm:p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mobile-gallery-title"
+            onClick={(event) => event.target === event.currentTarget && close()}
+          >
+            <div
+              className="relative flex max-h-[92svh] w-full max-w-lg flex-col overflow-hidden bg-[var(--surface-elevated)] p-4 shadow-2xl sm:p-6"
+              style={{ borderRadius: rounded }}
+            >
+              <button
+                type="button"
+                onClick={close}
+                aria-label="Fechar galeria"
+                className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-[rgba(255,255,255,0.88)] text-2xl leading-none text-[var(--primary)] shadow-md"
+              >
+                ×
+              </button>
+              <div
+                className="relative aspect-[4/5] overflow-hidden bg-[#d8d8d4]"
+                style={{ borderRadius: rounded * 0.7 }}
+              >
+                <img
+                  src={heroItem.image}
+                  alt={heroItem.alt ?? ""}
+                  draggable={false}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+              <div className="pt-4">
+                <p
+                  className="m-0 text-xs uppercase tracking-[0.12em]"
+                  style={{ color: mutedColor }}
+                >
+                  {String(heroSlotLabel).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
+                </p>
+                <h2 id="mobile-gallery-title" className="mt-2 text-3xl leading-tight">
+                  {title}
+                </h2>
+                <p className="mt-2 mb-0 text-sm leading-relaxed" style={{ color: mutedColor }}>
+                  {activeCaption ?? description}
+                </p>
+              </div>
+              <div className="mt-4 grid grid-cols-5 gap-2">
+                {items.map((item, itemIndex) => (
+                  <button
+                    key={item.id ?? itemIndex}
+                    type="button"
+                    onClick={() => select(itemIndex)}
+                    aria-label={`Ver ${item.alt ?? `imagem ${itemIndex + 1}`}`}
+                    aria-current={itemIndex === heroItemIndex}
+                    className="relative aspect-square overflow-hidden border-2 border-transparent p-0 opacity-70 aria-[current=true]:border-[var(--gold)] aria-[current=true]:opacity-100"
+                    style={{ borderRadius: rounded * 0.35 }}
+                  >
+                    <img
+                      src={item.image}
+                      alt=""
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

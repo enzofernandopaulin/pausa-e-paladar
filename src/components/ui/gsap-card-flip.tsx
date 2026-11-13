@@ -53,6 +53,10 @@ const CAPTION_MOBILE_LINE_SM = `${3.5 * CAPTION_MOBILE_LINE_RATIO}vw`;
 
 const UNSPLASH = (id: string) => `https://images.unsplash.com/photo-${id}?w=800&h=1000&fit=crop`;
 
+// Enhanced shadow for premium elevation
+const PREMIUM_SHADOW = "0 32px 64px -12px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04)";
+const PREMIUM_SHADOW_HOVER = "0 40px 80px -16px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.06)";
+
 export interface GsapFlipCardItem {
   id?: string | number;
   /** Image URL. Any size works, but a ~4:5 portrait ratio matches the default layout best. */
@@ -467,22 +471,27 @@ export default function GsapFlipCard({
       >
         <div className="min-h-svh px-[5vw] py-[8vw] flex flex-col gap-[6vw]">
           {showCounter && (
-            <div className="text-[3vw] tracking-[0.02em]">
-              <span className="font-semibold">{String(heroSlotLabel).padStart(2, "0")}</span>
+            <div
+              className="text-[3vw] tracking-[0.02em] animate-fade-in"
+              style={{ animationDelay: "0.1s" }}
+            >
+              <span className="font-display font-semibold">
+                {String(heroSlotLabel).padStart(2, "0")}
+              </span>
               <span style={{ color: mutedColor }}> / {String(items.length).padStart(2, "0")}</span>
             </div>
           )}
 
           {heroItem && (
             <div
-              className="relative w-full flex-1 min-h-[45svh] overflow-hidden bg-[#d8d8d4] shadow-[0_18px_40px_-24px_rgba(0,0,0,0.45)]"
+              className="relative w-full flex-1 min-h-[45svh] overflow-hidden bg-[#fafafa] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18),_0_0_0_1px_rgba(0,0,0,0.04)]"
               style={{ borderRadius: rounded }}
             >
               <img
                 src={heroItem.image}
                 alt={heroItem.alt ?? ""}
                 draggable={false}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover rounded-[inherit]"
               />
             </div>
           )}
@@ -510,7 +519,7 @@ export default function GsapFlipCard({
             >
               <p
                 ref={captionRef}
-                className="text-[3vw] text-left max-md:text-left max-md:w-[80%] max-md:text-[4vw] w-[80%] m-0 leading-normal"
+                className="text-[3.2vw] text-left max-md:text-left max-md:w-[85%] max-md:text-[4.2vw] w-[85%] m-0 leading-[1.5] font-light tracking-[0.01em]"
               >
                 {activeCaption}
               </p>
@@ -527,14 +536,14 @@ export default function GsapFlipCard({
                   type="button"
                   onClick={() => select(itemIndex)}
                   aria-label={item.alt ?? item.caption ?? `Image ${itemIndex + 1}`}
-                  className="relative p-0 border-none overflow-hidden aspect-4/5 w-full bg-[#d8d8d4] [-webkit-tap-highlight-color:transparent]"
+                  className="relative p-0 border-none overflow-hidden aspect-4/5 w-full bg-[#fafafa] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18),_0_0_0_1px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_40px_80px_-16px_rgba(0,0,0,0.22),_0_0_0_1px_rgba(0,0,0,0.06)] [-webkit-tap-highlight-color:transparent]"
                   style={{ borderRadius: rounded * 0.6 }}
                 >
                   <img
                     src={item.image}
                     alt={item.alt ?? ""}
                     draggable={false}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover rounded-[inherit]"
                   />
                 </button>
               );
@@ -553,10 +562,12 @@ export default function GsapFlipCard({
     >
       {showCounter && (
         <div
-          className="absolute top-[2.22vw] left-[2.78vw] text-[0.9vw] tracking-[0.02em] z-60"
-          style={chromeStyle}
+          className="absolute top-[2.22vw] left-[2.78vw] text-[0.9vw] tracking-[0.02em] z-60 animate-fade-in"
+          style={{ ...chromeStyle, animationDelay: "0.1s" }}
         >
-          <span className="font-semibold">{String(heroSlotLabel).padStart(2, "0")}</span>
+          <span className="font-display font-semibold">
+            {String(heroSlotLabel).padStart(2, "0")}
+          </span>
           <span style={{ color: mutedColor }}> / {String(items.length).padStart(2, "0")}</span>
         </div>
       )}
@@ -582,7 +593,10 @@ export default function GsapFlipCard({
           </p>
           <p className="text-[0.97vw] leading-[1.65] m-0">{description}</p>
           <div className="mt-[1.94vw]" style={{ height: `${CAPTION_LINE_VW * captionLines}vw` }}>
-            <p ref={captionRef} className="text-[1vw] w-[80%] text-left leading-[1.3] m-0">
+            <p
+              ref={captionRef}
+              className="text-[1.05vw] w-[85%] text-left leading-[1.45] m-0 font-light tracking-[0.01em]"
+            >
               {activeCaption}
             </p>
           </div>
@@ -604,7 +618,7 @@ export default function GsapFlipCard({
               }
               aria-current={(opened && isHero) || undefined}
               tabIndex={!opened ? (itemIndex === order[0] ? 0 : -1) : isHero ? -1 : 0}
-              className={`p-0 border-none bg-[#d8d8d4] overflow-hidden shadow-[0_18px_40px_-24px_rgba(0,0,0,0.45)] [-webkit-tap-highlight-color:transparent] ${
+              className={`p-0 border-none bg-[#fafafa] overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18),_0_0_0_1px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_40px_80px_-16px_rgba(0,0,0,0.22),_0_0_0_1px_rgba(0,0,0,0.06)] [-webkit-tap-highlight-color:transparent] ${
                 !opened || !isHero ? "cursor-pointer" : "cursor-default"
               }`}
               style={cardStyle(itemIndex)}

@@ -8,11 +8,9 @@ const s = {
 
 export function HeroArt() {
   return (
-    <div
-      className="relative mx-auto aspect-square w-full max-w-[520px] overflow-hidden text-primary"
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full spin-slow">
+    <div className="relative w-full h-full overflow-visible text-primary" aria-hidden="true">
+      <div className="absolute inset-0 rounded-[var(--radius)] bg-[var(--surface-subtle)]/60 border border-border-subtle/60 shadow-lg -rotate-1 scale-95 transition-transform duration-500 hover:rotate-0 hover:scale-100" />
+      <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full spin-slow opacity-60">
         <circle cx="200" cy="200" r="185" {...s} strokeWidth={0.8} strokeDasharray="2 8" />
         <ellipse
           cx="200"
@@ -25,23 +23,27 @@ export function HeroArt() {
         />
         <circle cx="375" cy="140" r="6" className="fill-gold" />
       </svg>
-      <img
-        src={basket}
-        width={1024}
-        height={1024}
-        alt=""
-        className="float absolute inset-[8%] mix-blend-multiply h-[84%] w-[84%] object-contain"
-      />
-      <div className="absolute left-2 top-6 grid h-24 w-24 -rotate-12 place-items-center rounded-full border border-gold bg-background text-center tag text-[0.6rem] text-gold sm:left-6">
+      <div className="absolute inset-0 rounded-[var(--radius)] overflow-hidden bg-[var(--surface-elevated)]/80 backdrop-blur-sm shadow-xl border border-border-subtle">
+        <img
+          src={basket}
+          width={1024}
+          height={1024}
+          alt=""
+          className="h-full w-full object-cover rounded-[var(--radius)] transition-transform duration-700 hover:scale-105"
+        />
+      </div>
+      <div className="absolute -left-2 top-6 sm:left-4 sm:top-8 grid h-24 w-24 -rotate-12 place-items-center rounded-full border-2 border-gold bg-background/95 backdrop-blur-md text-center tag text-[0.650rem] text-gold shadow-md font-medium">
         feito
         <br />à mão
       </div>
-      <p
-        className="absolute bottom-4 right-0 rotate-[-6deg] text-2xl text-terracotta sm:right-4"
-        style={{ fontFamily: "Caveat, cursive" }}
-      >
-        um carinho bem vivido ↶
-      </p>
+      <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-6 rotate-[-4deg] bg-background/90 backdrop-blur-md px-4 py-2 rounded-full border border-border-subtle shadow-md">
+        <p
+          className="text-xl sm:text-2xl text-terracotta font-normal m-0"
+          style={{ fontFamily: "Caveat, cursive" }}
+        >
+          um carinho bem vivido ↶
+        </p>
+      </div>
     </div>
   );
 }
@@ -131,9 +133,13 @@ export function CakeArt() {
   );
 }
 
-export function PlateArt() {
+export function PlateArt({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 300 300" className="w-full max-w-sm text-primary" aria-hidden="true">
+    <svg
+      viewBox="0 0 300 300"
+      className={`w-full max-w-sm text-primary ${className ?? ""}`}
+      aria-hidden="true"
+    >
       <circle cx="150" cy="150" r="120" {...s} />
       <circle
         cx="150"

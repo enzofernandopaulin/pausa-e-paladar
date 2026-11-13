@@ -1,43 +1,35 @@
 import type { GsapFlipCardItem } from "@/components/ui/gsap-card-flip";
-
-const UNSPLASH = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?w=800&h=1000&fit=crop&auto=format&q=80`;
+import cesta1 from "@/assets/cesta-1.jpg";
+import cesta2 from "@/assets/cesta-2.jpg";
+import cesta3 from "@/assets/cesta-3.jpg";
+import cesta4 from "@/assets/cesta-4.jpg";
 
 export const basketItems: GsapFlipCardItem[] = [
   {
     id: "cafe-manha",
-    image: UNSPLASH("1517430816045-df4b7de11d1d"), // breakfast basket
-    alt: "Cesta de café da manhã com pães, frutas e doces",
-    caption: "Pães artesanais, frutas da estação e doces caseiros.",
+    image: cesta1,
+    alt: "Cesta de café da manhã com croissants, waffles, suco, frutas e doces",
+    caption:
+      "Croissants quentinhos, waffles, suco de laranja e uma seleção afetiva de frutas e doces.",
   },
   {
     id: "tabua-compartilhar",
-    image: UNSPLASH("1505576399279-565b52d4ac71"), // charcuterie board
-    alt: "Tábua de queijos, frios e geleias para compartilhar",
-    caption: "Queijos selecionados, frios premium e geleias artesanais.",
+    image: cesta2,
+    alt: "Tábua de queijos, frios, geleias e frutas para compartilhar",
+    caption:
+      "Queijos selecionados, frios premium, geleia artesanal e frutas da estação para um momento a dois.",
   },
   {
     id: "caixa-mimos",
-    image: UNSPLASH("1549903089-2e1f9e1c5c8c"), // gift box
-    alt: "Caixa de mimos com doces e biscoitos artesanais",
-    caption: "Seleção afetiva de biscoitos, chocolates e surpresas.",
-  },
-  {
-    id: "cesta-aniversario",
-    image: UNSPLASH("1551024709-e8e17c8b7e7d"), // birthday basket
-    alt: "Cesta especial de aniversário com bolo e presentes",
-    caption: "Bolo artesanal, velas e mimos para celebrar a data.",
-  },
-  {
-    id: "tabua-doces",
-    image: UNSPLASH("1563805042-7684c019e1cb"), // dessert board
-    alt: "Tábua de doces variados e frutas",
-    caption: "Doces finos, frutas frescas e caldas artesanais.",
+    image: cesta3,
+    alt: "Cesta com suco, waffles, croissants, torta de chocolate, frutas e salgados",
+    caption:
+      "Torta de chocolate, croissants, waffles, salgados e frutas frescas — um carinho bem vivido.",
   },
   {
     id: "cesta-romantica",
-    image: UNSPLASH("1519676870-2b2b8b5b8a1e"), // romantic breakfast
-    alt: "Cesta romântica para duas pessoas",
-    caption: "Tudo para um café da manhã a dois inesquecível.",
+    image: cesta4,
+    alt: "Cesta romântica com flores, suco, queijos, frios, frutas e doces",
+    caption: "Buquê de flores, queijos, frios, frutas e doces finos para presentear com carinho.",
   },
 ];

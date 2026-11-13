@@ -1,22 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
-import {
-  ArrowRight,
-  Check,
-  Heart,
-  Instagram,
-  Menu,
-  MessageCircle,
-  Package,
-  Sparkles,
-  Users,
-  X,
-} from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Check, Heart, Menu, MessageCircle, Sparkles, Users, X } from "lucide-react";
 import { Wordmark } from "@/components/Logo";
 import { HeroArt, PlateArt } from "@/components/Art";
 import GsapFlipCard from "@/components/ui/gsap-card-flip";
 import { basketItems } from "@/data/basket-images";
 import { Badge, badgeVariants } from "@/components/ui/badge";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const title = "Pausa e Paladar — Cestas & tábuas artesanais";
 const desc =
@@ -36,84 +26,13 @@ export const Route = createFileRoute("/")({
 });
 
 const nav = [
+  { href: "/cardapio", label: "Cardápio" },
   { href: "#a-marca", label: "A marca" },
   { href: "#colecoes", label: "Cestas & tábuas" },
   { href: "#encomendas", label: "Encomendas" },
 ];
-const Wrap = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
-  <div className={`mx-auto w-full max-w-6xl px-5 sm:px-8 ${className}`}>{children}</div>
-);
 
-function Header() {
-  const [open, setOpen] = useState(false);
-  return (
-    <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur-md transition-colors">
-      <Wrap className="flex h-20 items-center justify-between py-3">
-        <a
-          href="#topo"
-          className="flex items-center gap-3"
-          aria-label="Pausa e Paladar — início"
-          onClick={() => setOpen(false)}
-        >
-          <Wordmark className="h-18 w-60 object-contain" />
-        </a>
-        <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
-          {nav.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className="relative text-sm font-medium transition-colors hover:text-[var(--gold)] after:content-[] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gold after:transition-all after:duration-300"
-            >
-              {n.label}
-            </a>
-          ))}
-          <div className="hidden md:flex items-center gap-2">
-            <a href="#encomendas" className="btn btn-premium btn-sm">
-              Fazer encomenda <ArrowRight size={12} />
-            </a>
-          </div>
-        </nav>
-        <button
-          className="grid h-12 w-12 place-items-center rounded-full border md:hidden"
-          aria-label={open ? "Fechar menu" : "Abrir menu"}
-          aria-expanded={open}
-          aria-controls="menu-mobile"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </Wrap>
-      {open && (
-        <nav
-          id="menu-mobile"
-          aria-label="Menu mobile"
-          className="border-t bg-background/95 md:hidden"
-          onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
-        >
-          <Wrap className="flex flex-col gap-4 py-8">
-            {nav.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                onClick={() => setOpen(false)}
-                className="py-3 font-display text-2xl text-foreground transition-colors hover:text-[var(--gold)]"
-              >
-                {n.label}
-              </a>
-            ))}
-            <a
-              href="#encomendas"
-              onClick={() => setOpen(false)}
-              className="btn mt-2 btn-premium text-primary-foreground"
-            >
-              Fazer encomenda <ArrowRight size={15} />
-            </a>
-          </Wrap>
-        </nav>
-      )}
-    </header>
-  );
-}
+import { Header } from "@/components/Header";
 
 const cares = [
   {
@@ -140,173 +59,244 @@ const stats = [
 ];
 
 function Index() {
+  // Scroll reveal hooks for each section
+  const [manifestoRef, manifestoVisible] = useScrollReveal<HTMLDivElement>();
+  const [marcaRef, marcaVisible] = useScrollReveal<HTMLDivElement>();
+  const [colecoesRef, colecoesVisible] = useScrollReveal<HTMLDivElement>();
+  const [cuidadoRef, cuidadoVisible] = useScrollReveal<HTMLDivElement>();
+  const [depoimentoRef, depoimentoVisible] = useScrollReveal<HTMLDivElement>();
+  const [encomendasRef, encomendasVisible] = useScrollReveal<HTMLDivElement>();
+
+  const revealClass = (visible: boolean) =>
+    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8";
+
   return (
     <div id="topo">
       <Header />
       <main className="min-h-screen">
-        <Wrap className="grid grid-cols-1 gap-8 md:gap-12 lg:gap-20 xl:gap-24 pb-16">
-          <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
-            <h1 className="mt-4 text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-normal leading-none tracking-tight text-foreground">
-              Um carinho
-              <br />
-              em forma de <em className="text-[var(--gold)]">presente.</em>
-            </h1>
-            <p className="mt-4 max-w-sm text-base text-muted-foreground leading-relaxed">
-              Cestas e tábuas artesanais para celebrar aniversários, manhãs especiais e todos
-              aqueles "lembrei de você".
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              <a href="#colecoes" className="btn btn-premium">
-                Ver coleções <ArrowRight size={16} />
-              </a>
-              <a
-                href="#encomendas"
-                className="btn btn-premium-outline btn-sm mt-2 transition-colors"
-              >
-                Montar meu presente
-              </a>
+        <section className="section-py overflow-hidden" aria-labelledby="hero-title">
+          <div className="section-container gap-section">
+            <div className="grid grid-12 gap-section-lg items-center">
+              {/* Content column: cols 1-6 on lg, full on mobile */}
+              <div className="col-start-1 col-end-7 lg:col-end-7 text-center lg:text-left flex flex-col items-center lg:items-start">
+                <p className="text-body-xs text-gold tracking-wider uppercase mb-4">
+                  Cestas, tábuas & carinho
+                </p>
+                <h1 id="hero-title" className="text-display-2xl text-foreground">
+                  Um carinho
+                  <br />
+                  em forma de <em className="text-[var(--gold)] not-italic">presente.</em>
+                </h1>
+                <p className="text-body-lg text-muted-foreground mt-6 max-w-md lg:max-w-lg">
+                  Cestas e tábuas artesanais para celebrar aniversários, manhãs especiais e todos
+                  aqueles "lembrei de você".
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 mt-8 items-center">
+                  <a href="#colecoes" className="btn btn-premium btn-lg w-full sm:w-auto">
+                    Ver coleções <ArrowRight size={18} />
+                  </a>
+                  <a href="#encomendas" className="btn btn-premium-outline btn-lg w-full sm:w-auto">
+                    Montar meu presente
+                  </a>
+                </div>
+              </div>
+
+              {/* Image column: cols 7-13 on lg, full on mobile — NO max-w-lg mx-auto */}
+              <div className="col-start-7 col-end-13 lg:col-end-13 relative aspect-[4/5] lg:aspect-square">
+                <HeroArt />
+              </div>
             </div>
           </div>
-
-          <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 pt-8 md:pt-0 border-t border-border-subtle md:border-0">
-            <HeroArt />
-          </div>
-        </Wrap>
+        </section>
 
         <section className="py-20 bg-[var(--surface-subtle)]" aria-labelledby="manifesto">
-          <Wrap className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            <p className="tag text-gold-soft">Um jeito gostoso de presentear</p>
-            <h2
-              id="manifesto"
-              className="col-span-1 md:col-span-2 lg:col-span-3 text-5xl sm:text-6xl lg:text-7xl font-normal leading-none tracking-tight text-foreground"
-            >
+          <div
+            ref={manifestoRef}
+            className={`section-container grid grid-12 gap-6 transition-all duration-1000 ease-out ${revealClass(manifestoVisible)}`}
+          >
+            <p className="col-start-1 col-end-2 tag text-gold-soft">
+              Um jeito gostoso de presentear
+            </p>
+            <h2 id="manifesto" className="col-start-2 col-end-10 text-display-xl text-foreground">
               Tem coisa melhor do que receber uma pausa bonita, cheia de sabores e feita
               especialmente para você?
             </h2>
-          </Wrap>
+          </div>
         </section>
 
-        <section id="a-marca" className="py-24 bg-[var(--surface-elevated)]">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div>
-              <p className="tag text-gold">01 — A marca</p>
-              <h2 className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-normal leading-none tracking-tight text-foreground">
-                Pequenos gestos.
-                <br />
-                <em className="text-[var(--terracotta)]">Grandes memórias.</em>
-              </h2>
-            </div>
-            <div className="space-y-4 text-lg text-muted-foreground">
-              <p>
-                O Pausa e Paladar nasceu das mãos e do olhar de uma mulher apaixonada por montar
-                presentes que fazem os olhos brilharem. Cada cesta e cada tábua é pensada como uma
-                história gostosa para abrir.
-              </p>
-              <p>
-                Tem pão quentinho, doce escolhido com cuidado, laço bonito e aquele detalhe
-                inesperado que mostra: alguém pensou em você.
-              </p>
-            </div>
-            <div className="mt-6 grid grid-cols-2 gap-2">
-              {stats.map(([n, l]) => (
-                <div key={l} className="text-center">
-                  <dt className="font-display text-6xl text-gold">{n}</dt>
-                  <dd className="tag mt-2 text-muted-foreground">{l}</dd>
+        <section id="a-marca" className="section-py bg-[var(--surface-elevated)]">
+          <div
+            ref={marcaRef}
+            className={`section-container gap-section-lg transition-all duration-1000 ease-out ${revealClass(marcaVisible)}`}
+          >
+            <div className="grid grid-12 gap-section-lg items-start">
+              {/* Text column: cols 1-7 */}
+              <div className="col-start-1 col-end-7 lg:col-end-7 lg:pr-8">
+                <p className="text-body-xs text-gold tracking-wider uppercase mb-3">01 — A marca</p>
+                <h2 className="text-display-xl text-foreground">
+                  Pequenos gestos.
+                  <br />
+                  <em className="text-[var(--terracotta)]">Grandes memórias.</em>
+                </h2>
+                <div className="space-y-4 mt-6 text-body-md text-muted-foreground leading-relaxed">
+                  <p>
+                    O Pausa e Paladar nasceu das mãos e do olhar de uma mulher apaixonada por montar
+                    presentes que fazem os olhos brilharem. Cada cesta e cada tábua é pensada como
+                    uma história gostosa para abrir.
+                  </p>
+                  <p>
+                    Tem pão quentinho, doce escolhido com cuidado, laço bonito e aquele detalhe
+                    inesperado que mostra: alguém pensou em você.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+                <a
+                  href="#encomendas"
+                  className="inline-flex items-center gap-2 text-body-sm font-medium text-foreground hover:text-[var(--gold)] transition-colors mt-6"
+                >
+                  Conte a sua ocasião <ArrowRight size={14} />
+                </a>
+              </div>
 
-        <section id="colecoes" className="py-32">
-          <div className="text-center mb-12">
-            <p className="tag text-gold">02 — Cestas & tábuas</p>
-            <h2 className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-normal leading-none tracking-tight text-foreground">
-              Escolha o seu jeito de <em className="text-[var(--gold)]">celebrar.</em>
-            </h2>
-          </div>
-
-          <div className="min-h-[60vh] md:min-h-[50vh] relative overflow-hidden rounded-2xl border border-border-subtle bg-[var(--surface-elevated)]">
-            <GsapFlipCard
-              items={basketItems}
-              title="Coleções Pausa e Paladar"
-              meta="Cestas & tábuas artesanais"
-              description="Cada cesta e tábua é montada à mão com ingredientes selecionados. Toque para explorar."
-              rounded={16}
-              stackRotation={2}
-              showCounter={true}
-              backgroundColor="oklch(0.882 0.034 72)"
-              textColor="oklch(0.32 0.06 130)"
-              mutedColor="oklch(0.42 0.04 120)"
-            />
-          </div>
-        </section>
-
-        <section id="cuidado" className="py-24 bg-[var(--surface-subtle)]">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div className="order-2 order-first md:order-1 lg:order-1">
-              <PlateArt />
-            </div>
-            <div>
-              <p className="tag text-gold">03 — O nosso cuidado</p>
-              <h2 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-normal leading-none tracking-tight text-foreground">
-                O presente fica ainda mais bonito quando é feito com{" "}
-                <em className="text-[var(--gold)]">intenção.</em>
-              </h2>
-              <ul className="mt-6 space-y-4">
-                {cares.map(({ I, t, d }) => (
-                  <li
-                    key={t}
-                    className="flex gap-4 items-start border-b border-border-subtle pb-6 last:pb-0"
+              {/* Stats column: cols 7-13 */}
+              <div className="col-start-7 col-end-13 lg:col-end-13 grid grid-cols-3 gap-4 mt-8 lg:mt-0">
+                {stats.map(([n, l]) => (
+                  <div
+                    key={l}
+                    className="text-center p-6 lg:p-8 bg-[var(--surface-subtle)] rounded-xl border border-[var(--border-subtle)]"
                   >
-                    <I className="mt-1.5 shrink-0 text-terracotta text-lg" aria-hidden="true" />
-                    <div>
-                      <h3 className="font-medium text-xl text-foreground">{t}</h3>
-                      <p className="text-base text-muted-foreground line-clamp-2">{d}</p>
-                    </div>
-                  </li>
+                    <dt className="font-display text-4xl lg:text-5xl text-gold">{n}</dt>
+                    <dd className="text-body-xs text-muted-foreground mt-2 tracking-wider">{l}</dd>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="py-24 bg-[var(--surface-subtle)]" aria-label="Depoimento">
-          <div className="max-w-3xl mx-auto text-center">
-            <blockquote className="font-display text-4xl italic sm:text-5xl leading-relaxed text-foreground pb-8 border-y border-border-subtle">
-              “A cesta chegou linda, cheirosa e com tudo que lembrava a minha mãe. Foi o presente
-              mais especial.”
-            </blockquote>
-            <figcaption className="mt-8">
-              <span className="font-medium text-lg">Camila R.</span>
-              <span className="tag mt-1 block text-xs text-muted-foreground">
-                cliente Pausa e Paladar
-              </span>
-            </figcaption>
-          </div>
-        </section>
-
-        <section id="encomendas" className="py-24 bg-[var(--surface-elevated)]">
-          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12">
-            <div>
-              <p className="tag text-gold-soft">04 — Encomendas</p>
-              <h2 className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-normal leading-none tracking-tight text-foreground">
-                Você imagina.
-                <br />
-                <em className="text-[var(--gold-soft)]">A gente monta.</em>
-              </h2>
-              <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-                Conte para quem é, qual é a ocasião e o que você gostaria de celebrar. A montagem é
-                feita sob medida e combinada com você.
+        <section id="colecoes" className="section-py">
+          <div
+            ref={colecoesRef}
+            className={`section-container transition-all duration-1000 ease-out ${revealClass(colecoesVisible)}`}
+          >
+            <div className="text-center max-w-2xl mx-auto mb-16 lg:mb-20 fade-in-up">
+              <p className="text-body-xs text-gold tracking-wider uppercase mb-3">
+                02 — Cestas & tábuas
               </p>
-              <a href="#contato" className="mt-6 btn btn-premium w-full">
-                Fazer uma encomenda <MessageCircle size={16} />
-              </a>
+              <h2 className="text-display-xl text-foreground">
+                Escolha o seu jeito de <em className="text-[var(--gold)]">celebrar.</em>
+              </h2>
             </div>
 
-            <div className="space-y-4">
-              <p className="text-sm text-gold uppercase tracking-wider mb-4">Como funciona</p>
-              <div className="space-y-3">
+            <div className="grid grid-12">
+              <GsapFlipCard
+                items={basketItems}
+                title="Coleções Pausa e Paladar"
+                meta="Cestas & tábuas artesanais"
+                description="Cada cesta e tábua é montada à mão com ingredientes selecionados. Toque para explorar."
+                rounded={20}
+                stackRotation={3}
+                showCounter={true}
+                backgroundColor="oklch(0.97 0.005 120)"
+                textColor="oklch(0.25 0.05 120)"
+                mutedColor="oklch(0.45 0.03 120)"
+                thumbWidth={120}
+                thumbHeight={135}
+                thumbGap={16}
+                heroWidth={560}
+                heroHeight={700}
+                duration={0.8}
+                ease="power4.inOut"
+                className="col-start-1 col-end-13"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section id="cuidado" className="section-py bg-[var(--surface-subtle)]">
+          <div
+            ref={cuidadoRef}
+            className={`section-container gap-section-lg transition-all duration-1000 ease-out ${revealClass(cuidadoVisible)}`}
+          >
+            <div className="grid grid-12 gap-section-lg items-center">
+              {/* Image: cols 1-6 on lg, full on mobile — order-2 on mobile, order-1 on lg */}
+              <div className="col-start-1 col-end-7 lg:col-end-7 order-2 lg:order-1 relative aspect-square">
+                <PlateArt className="w-full h-full" />
+              </div>
+              {/* Content: cols 7-13 on lg, full on mobile */}
+              <div className="col-start-7 col-end-13 lg:col-end-13 order-1 lg:order-2 text-center lg:text-left">
+                <p className="text-body-xs text-gold tracking-wider uppercase mb-3">
+                  03 — O nosso cuidado
+                </p>
+                <h2 className="text-display-lg text-foreground">
+                  O presente fica ainda mais bonito quando é feito com{" "}
+                  <em className="text-[var(--gold)]">intenção.</em>
+                </h2>
+                <ul className="mt-8 space-y-6 text-body-md text-muted-foreground leading-relaxed">
+                  {cares.map(({ I, t, d }) => (
+                    <li key={t} className="flex gap-4 items-start text-left">
+                      <I className="mt-1 shrink-0 text-terracotta text-xl" aria-hidden="true" />
+                      <div>
+                        <h3 className="font-medium text-lg text-foreground mb-1">{t}</h3>
+                        <p className="text-base">{d}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-py bg-[var(--surface-subtle)]" aria-label="Depoimento">
+          <div
+            ref={depoimentoRef}
+            className={`section-container transition-all duration-1000 ease-out ${revealClass(depoimentoVisible)}`}
+          >
+            <blockquote className="max-w-3xl mx-auto text-center relative fade-in-up">
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-gold text-6xl font-display">
+                "
+              </span>
+              <p className="text-display-md text-foreground italic leading-relaxed pb-8 border-b border-[var(--border-subtle)]">
+                "A cesta chegou linda, cheirosa e com tudo que lembrava a minha mãe. Foi o presente
+                mais especial."
+              </p>
+              <figcaption className="mt-6 flex items-center justify-center gap-4">
+                <span className="font-medium text-body-lg text-foreground">Camila R.</span>
+                <span className="text-body-xs text-muted-foreground">cliente Pausa e Paladar</span>
+              </figcaption>
+            </blockquote>
+          </div>
+        </section>
+
+        <section id="encomendas" className="section-py bg-[var(--surface-elevated)]">
+          <div
+            ref={encomendasRef}
+            className={`section-container gap-section-lg transition-all duration-1000 ease-out ${revealClass(encomendasVisible)}`}
+          >
+            <div className="grid grid-12 gap-section-lg items-start">
+              {/* Left column: cols 1-7 */}
+              <div className="col-start-1 col-end-7 lg:col-end-7">
+                <p className="text-body-xs text-gold-soft tracking-wider uppercase mb-3">
+                  04 — Encomendas
+                </p>
+                <h2 className="text-display-xl text-foreground">
+                  Você imagina.
+                  <br />
+                  <em className="text-[var(--gold-soft)]">A gente monta.</em>
+                </h2>
+                <p className="mt-6 text-body-md text-muted-foreground leading-relaxed">
+                  Conte para quem é, qual é a ocasião e o que você gostaria de celebrar. A montagem
+                  é feita sob medida e combinada com você.
+                </p>
+                <a href="#contato" className="btn btn-premium btn-lg w-full mt-8">
+                  Fazer uma encomenda <MessageCircle size={18} />
+                </a>
+              </div>
+              {/* Right column: cols 7-13 */}
+              <div className="col-start-7 col-end-13 lg:col-end-13 space-y-4 pt-4 lg:pt-0">
+                <p className="text-body-xs text-gold uppercase tracking-wider mb-4">
+                  Como funciona
+                </p>
                 {[
                   [
                     "01",
@@ -326,14 +316,14 @@ function Index() {
                 ].map(([n, t, d]) => (
                   <div
                     key={n}
-                    className="flex gap-4 border-t border-border-subtle pt-5 pb-5 last:pb-0"
+                    className="flex gap-4 p-5 bg-[var(--surface-subtle)] rounded-xl border border-[var(--border-subtle)]"
                   >
-                    <span className="font-mono text-sm text-gold capitalize">{n}</span>
+                    <span className="font-mono text-body-xs text-gold shrink-0">{n}</span>
                     <div>
-                      <h3 className="text-base font-medium text-foreground capitalize">{t}</h3>
-                      <p className="text-sm text-muted-foreground">{d}</p>
+                      <h3 className="font-medium text-body-md text-foreground">{t}</h3>
+                      <p className="text-body-sm text-muted-foreground mt-1">{d}</p>
                     </div>
-                    <Check className="ml-auto shrink-0 text-gold size={16}" />
+                    <Check className="mt-auto shrink-0 text-gold size={18}" />
                   </div>
                 ))}
               </div>
@@ -341,32 +331,38 @@ function Index() {
           </div>
         </section>
       </main>
-      <footer id="contato" className="py-16 bg-[var(--surface-subtle)]">
-        <Wrap className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-8 border-t border-border-subtle">
-          <div>
-            <Wordmark className="w-64 mb-4" />
-            <p className="text-base text-muted-foreground leading-relaxed">
-              Um convite para celebrar alguém — inclusive você.
-            </p>
+      <footer
+        id="contato"
+        className="border-t border-[var(--border-subtle)] bg-[var(--surface-subtle)]"
+      >
+        <div className="section-container py-12 lg:py-16">
+          <div className="grid grid-12 gap-8 lg:gap-12">
+            <div className="col-start-1 col-end-5 lg:col-end-5">
+              <Wordmark className="w-48 mb-4" />
+              <p className="text-body-sm text-muted-foreground leading-relaxed">
+                Um convite para celebrar alguém — inclusive você.
+              </p>
+            </div>
+            <nav
+              aria-label="Rodapé"
+              className="col-start-5 col-end-9 lg:col-end-9 grid grid-cols-2 gap-4"
+            >
+              {nav.map((n) => (
+                <a
+                  key={n.href}
+                  href={n.href}
+                  className="text-body-sm font-medium text-foreground hover:text-[var(--gold)] transition-colors"
+                >
+                  {n.label}
+                </a>
+              ))}
+            </nav>
+            <div className="col-start-9 col-end-13 lg:col-end-13 flex flex-col gap-2 text-body-sm text-muted-foreground">
+              <span>© 2026 Pausa e Paladar</span>
+              <span>Feito com calma, afeto e coisas gostosas.</span>
+            </div>
           </div>
-
-          <nav aria-label="Rodapé" className="grid grid-cols-2 gap-2 md:grid-cols-4 justify-center">
-            {nav.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                className="text-sm font-medium text-foreground hover:text-[var(--gold)] transition-colors"
-              >
-                {n.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-3 pt-4 border-t border-border-subtle">
-            <span>© 2026 Pausa e Paladar</span>
-            <span>Feito com calma, afeto e coisas gostosas.</span>
-          </div>
-        </Wrap>
+        </div>
       </footer>
     </div>
   );

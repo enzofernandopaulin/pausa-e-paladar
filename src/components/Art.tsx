@@ -27,20 +27,20 @@ export function HeroArt() {
         />
         <circle cx="375" cy="140" r="6" className="fill-gold" />
       </svg>
-      <div className="absolute inset-0 rounded-[var(--radius)] overflow-hidden bg-[var(--surface-elevated)]/80 backdrop-blur-sm shadow-xl border border-border-subtle">
+      <div className="absolute inset-0 z-10 rounded-[var(--radius)] overflow-hidden bg-[var(--surface-elevated)] shadow-xl border border-border-subtle">
         <img
           src={basket}
           width={1024}
           height={1024}
           alt="Cesta de café da manhã artesanal com flores, frutas e doces"
-          className="h-full w-full object-cover rounded-[var(--radius)]"
+          className="h-full w-full object-cover object-center rounded-[var(--radius)]"
         />
       </div>
-      <div className="absolute -left-2 top-6 sm:left-4 sm:top-8 grid h-24 w-24 -rotate-12 place-items-center rounded-full border-2 border-gold bg-background/95 backdrop-blur-md text-center tag text-[0.650rem] text-gold shadow-md font-medium">
+      <div className="absolute z-20 -left-2 top-6 sm:left-4 sm:top-8 grid h-24 w-24 -rotate-12 place-items-center rounded-full border-2 border-gold bg-background/95 backdrop-blur-md text-center tag text-[0.650rem] text-gold shadow-md font-medium">
         feito
         <br />à mão
       </div>
-      <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-6 rotate-[-4deg] bg-background/90 backdrop-blur-md px-4 py-2 rounded-full border border-border-subtle shadow-md">
+      <div className="absolute z-20 bottom-2 right-2 sm:bottom-4 sm:right-6 rotate-[-4deg] bg-background/90 backdrop-blur-md px-4 py-2 rounded-full border border-border-subtle shadow-md">
         <p
           className="text-xl sm:text-2xl text-terracotta font-normal m-0"
           style={{ fontFamily: "Caveat, cursive" }}

@@ -73,35 +73,38 @@ function Index() {
     <div id="topo">
       <Header />
       <main className="min-h-screen">
-        <section className="section-py overflow-hidden" aria-labelledby="hero-title">
+        <section
+          className="section-py overflow-hidden lg:min-h-[min(760px,calc(100svh-5rem))] lg:flex lg:items-center"
+          aria-labelledby="hero-title"
+        >
           <div className="section-container gap-section">
             <div className="grid grid-12 gap-section-lg items-center">
               {/* Content column: cols 1-6 on lg, full on mobile */}
               <div className="col-start-1 col-end-7 lg:col-end-7 text-center lg:text-left flex flex-col items-center lg:items-start">
-                <p className="text-body-xs text-gold tracking-wider uppercase mb-4">
-                  Cestas, tábuas & carinho
+                <p className="text-body-xs text-gold tracking-wider uppercase mb-5">
+                  Presentes gastronômicos artesanais
                 </p>
-                <h1 id="hero-title" className="text-display-2xl text-foreground">
+                <h1 id="hero-title" className="text-display-2xl text-foreground max-w-[11ch]">
                   Um carinho
                   <br />
                   em forma de <em className="text-[var(--gold)] not-italic">presente.</em>
                 </h1>
-                <p className="text-body-lg text-muted-foreground mt-6 max-w-md lg:max-w-lg">
-                  Cestas e tábuas artesanais para celebrar aniversários, manhãs especiais e todos
-                  aqueles "lembrei de você".
+                <p className="text-body-lg text-muted-foreground mt-7 max-w-md lg:max-w-lg leading-relaxed">
+                  Cestas e tábuas montadas à mão para transformar aniversários, manhãs especiais e
+                  todos aqueles “lembrei de você” em experiências afetivas.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3 mt-8 items-center">
+                <div className="flex flex-col sm:flex-row gap-3 mt-9 items-center">
                   <a href="#colecoes" className="btn btn-premium btn-lg w-full sm:w-auto">
-                    Ver coleções <ArrowRight size={18} />
+                    Conheça nossas coleções <ArrowRight size={18} />
                   </a>
                   <a href="#encomendas" className="btn btn-premium-outline btn-lg w-full sm:w-auto">
-                    Montar meu presente
+                    Faça sua encomenda
                   </a>
                 </div>
               </div>
 
-              {/* Image column: cols 7-13 on lg, full on mobile — NO max-w-lg mx-auto */}
-              <div className="col-start-7 col-end-13 lg:col-end-13 relative aspect-[4/5] lg:aspect-square">
+              {/* Image column: cols 7-13 on lg, full on mobile */}
+              <div className="col-start-7 col-end-13 lg:col-end-13 relative aspect-[4/5] lg:aspect-square lg:max-w-[38rem] lg:justify-self-end">
                 <HeroArt />
               </div>
             </div>

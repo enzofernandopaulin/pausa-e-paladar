@@ -8,9 +8,13 @@ const s = {
 
 export function HeroArt() {
   return (
-    <div className="relative w-full h-full overflow-visible text-primary" aria-hidden="true">
-      <div className="absolute inset-0 rounded-[var(--radius)] bg-[var(--surface-subtle)]/60 border border-border-subtle/60 shadow-lg -rotate-1 scale-95 transition-transform duration-500 hover:rotate-0 hover:scale-100" />
-      <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full spin-slow opacity-60">
+    <div className="relative w-full h-full overflow-visible text-primary">
+      <div className="absolute inset-0 rounded-[var(--radius)] bg-[var(--surface-subtle)]/60 border border-border-subtle/60 shadow-lg -rotate-1 scale-95" />
+      <svg
+        viewBox="0 0 400 400"
+        className="absolute inset-0 h-full w-full spin-slow opacity-40"
+        aria-hidden="true"
+      >
         <circle cx="200" cy="200" r="185" {...s} strokeWidth={0.8} strokeDasharray="2 8" />
         <ellipse
           cx="200"
@@ -28,8 +32,8 @@ export function HeroArt() {
           src={basket}
           width={1024}
           height={1024}
-          alt=""
-          className="h-full w-full object-cover rounded-[var(--radius)] transition-transform duration-700 hover:scale-105"
+          alt="Cesta de café da manhã artesanal com flores, frutas e doces"
+          className="h-full w-full object-cover rounded-[var(--radius)]"
         />
       </div>
       <div className="absolute -left-2 top-6 sm:left-4 sm:top-8 grid h-24 w-24 -rotate-12 place-items-center rounded-full border-2 border-gold bg-background/95 backdrop-blur-md text-center tag text-[0.650rem] text-gold shadow-md font-medium">

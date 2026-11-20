@@ -26,7 +26,6 @@ export const Route = createFileRoute("/")({
 });
 
 const nav = [
-  { href: "/cardapio", label: "Cardápio" },
   { href: "#a-marca", label: "A marca" },
   { href: "#colecoes", label: "Cestas & tábuas" },
   { href: "#encomendas", label: "Encomendas" },

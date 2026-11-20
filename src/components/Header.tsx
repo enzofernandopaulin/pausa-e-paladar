@@ -3,7 +3,6 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import { Wordmark } from "@/components/Logo";
 
 const nav = [
-  { href: "/cardapio", label: "Cardápio" },
   { href: "#a-marca", label: "A marca" },
   { href: "#colecoes", label: "Cestas & tábuas" },
   { href: "#encomendas", label: "Encomendas" },

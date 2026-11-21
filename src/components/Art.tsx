@@ -27,7 +27,7 @@ export function HeroArt() {
         />
         <circle cx="375" cy="140" r="6" className="fill-gold" />
       </svg>
-      <div className="absolute inset-0 z-10 rounded-[var(--radius)] overflow-hidden bg-[var(--surface-elevated)] shadow-xl border border-border-subtle">
+      <div className="relative z-10 h-full w-full overflow-hidden rounded-[var(--radius)] border border-border-subtle bg-[var(--surface-elevated)] shadow-xl">
         <img
           src={basket}
           width={1024}
@@ -35,7 +35,7 @@ export function HeroArt() {
           alt="Cesta de café da manhã artesanal com flores, frutas e doces"
           loading="eager"
           fetchPriority="high"
-          className="h-full w-full object-cover object-center rounded-[var(--radius)]"
+          className="block h-full w-full rounded-[var(--radius)] object-cover object-center"
         />
       </div>
       <div className="absolute z-20 -left-2 top-6 sm:left-4 sm:top-8 grid h-24 w-24 -rotate-12 place-items-center rounded-full border-2 border-gold bg-background/95 backdrop-blur-md text-center tag text-[0.650rem] text-gold shadow-md font-medium">

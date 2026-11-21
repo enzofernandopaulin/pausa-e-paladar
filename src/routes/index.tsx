@@ -1,11 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useLayoutEffect, useRef } from "react";
 import { ArrowRight, Check, Heart, MessageCircle, Sparkles, Users } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Wordmark } from "@/components/Logo";
 import { HeroArt, PlateArt } from "@/components/Art";
 import GsapFlipCard from "@/components/ui/gsap-card-flip";
 import { basketItems } from "@/data/basket-images";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { getWhatsAppUrl } from "@/data/menu";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const title = "Pausa e Paladar — Cestas & tábuas artesanais";
 const desc =
@@ -60,18 +66,49 @@ const stats = [
 ];
 
 function Index() {
-  // Scroll reveal hooks for each section
-  const [marcaRef, marcaVisible] = useScrollReveal<HTMLDivElement>();
-  const [colecoesRef, colecoesVisible] = useScrollReveal<HTMLDivElement>();
-  const [cuidadoRef, cuidadoVisible] = useScrollReveal<HTMLDivElement>();
-  const [depoimentoRef, depoimentoVisible] = useScrollReveal<HTMLDivElement>();
-  const [encomendasRef, encomendasVisible] = useScrollReveal<HTMLDivElement>();
+  const pageRef = useRef<HTMLDivElement>(null);
 
-  const revealClass = (visible: boolean) =>
-    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8";
+  useLayoutEffect(() => {
+    const root = pageRef.current;
+    if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const context = gsap.context(() => {
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .from("[data-gsap-hero='eyebrow']", { autoAlpha: 0, y: 16, duration: 0.6 })
+        .from("[data-gsap-hero='title']", { autoAlpha: 0, y: 28, duration: 0.85 }, "-=0.35")
+        .from("[data-gsap-hero='description']", { autoAlpha: 0, y: 18, duration: 0.65 }, "-=0.42")
+        .from("[data-gsap-hero='actions']", { autoAlpha: 0, y: 14, duration: 0.55 }, "-=0.32")
+        .from(
+          "[data-gsap-hero='media']",
+          { autoAlpha: 0, scale: 0.97, y: 20, duration: 0.9 },
+          "-=0.58",
+        );
+
+      gsap.utils.toArray<HTMLElement>("[data-gsap-section]").forEach((section) => {
+        const items = section.querySelectorAll<HTMLElement>("[data-gsap-item]");
+        if (!items.length) return;
+
+        gsap.from(items, {
+          autoAlpha: 0,
+          y: 28,
+          duration: 0.75,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 78%",
+            once: true,
+          },
+        });
+      });
+    }, root);
+
+    return () => context.revert();
+  }, []);
 
   return (
-    <div id="topo">
+    <div id="topo" ref={pageRef}>
       <Header />
       <main className="min-h-screen">
         <section
@@ -82,19 +119,32 @@ function Index() {
             <div className="grid grid-12 gap-section-lg items-center">
               {/* Content column: cols 1-6 on lg, full on mobile */}
               <div className="col-start-1 col-end-7 lg:col-end-7 text-center lg:text-left flex flex-col items-center lg:items-start">
-                <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-5">
+                <p
+                  data-gsap-hero="eyebrow"
+                  className="text-body-xs text-gold-ink tracking-wider uppercase mb-5"
+                >
                   Presentes gastronômicos artesanais
                 </p>
-                <h1 id="hero-title" className="text-display-2xl text-foreground max-w-[11ch]">
+                <h1
+                  data-gsap-hero="title"
+                  id="hero-title"
+                  className="text-display-2xl text-foreground max-w-[11ch]"
+                >
                   Um carinho
                   <br />
                   em forma de <em className="text-[var(--gold-ink)] not-italic">presente.</em>
                 </h1>
-                <p className="text-body-lg text-muted-foreground mt-7 max-w-md lg:max-w-lg leading-relaxed">
+                <p
+                  data-gsap-hero="description"
+                  className="text-body-lg text-muted-foreground mt-7 max-w-md lg:max-w-lg leading-relaxed"
+                >
                   Cestas e tábuas montadas à mão para transformar aniversários, manhãs especiais e
                   todos aqueles “lembrei de você” em experiências afetivas.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3 mt-9 items-center">
+                <div
+                  data-gsap-hero="actions"
+                  className="flex flex-col sm:flex-row gap-3 mt-9 items-center"
+                >
                   <a href="#menu" className="btn btn-premium btn-lg w-full sm:w-auto">
                     Conheça nossas coleções <ArrowRight size={18} />
                   </a>
@@ -105,7 +155,10 @@ function Index() {
               </div>
 
               {/* Image column: cols 7-13 on lg, full on mobile */}
-              <div className="col-start-7 col-end-13 lg:col-end-13 relative aspect-[4/5] lg:aspect-square lg:max-w-[38rem] lg:justify-self-end">
+              <div
+                data-gsap-hero="media"
+                className="col-start-7 col-end-13 lg:col-end-13 relative aspect-[4/5] lg:aspect-square lg:max-w-[38rem] lg:justify-self-end"
+              >
                 <HeroArt />
               </div>
             </div>
@@ -113,11 +166,11 @@ function Index() {
         </section>
 
         <section id="menu" className="section-py">
-          <div
-            ref={colecoesRef}
-            className={`section-container transition-all duration-1000 ease-out ${revealClass(colecoesVisible)}`}
-          >
-            <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+          <div data-gsap-section className="section-container">
+            <div
+              data-gsap-item
+              className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end"
+            >
               <div className="max-w-2xl">
                 <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-3">
                   01 — Nosso menu
@@ -135,7 +188,7 @@ function Index() {
               </a>
             </div>
 
-            <div className="mt-12 grid grid-12">
+            <div data-gsap-item className="mt-12 grid grid-12">
               <GsapFlipCard
                 items={basketItems}
                 title="Coleções Pausa e Paladar"
@@ -161,11 +214,8 @@ function Index() {
         </section>
 
         <section id="personalizacao" className="section-py bg-[var(--surface-elevated)]">
-          <div
-            ref={marcaRef}
-            className={`section-container gap-section-lg transition-all duration-1000 ease-out ${revealClass(marcaVisible)}`}
-          >
-            <div className="grid grid-12 gap-section-lg items-start">
+          <div data-gsap-section className="section-container gap-section-lg">
+            <div data-gsap-item className="grid grid-12 gap-section-lg items-start">
               {/* Text column: cols 1-7 */}
               <div className="col-start-1 col-end-7 lg:col-end-7 lg:pr-8">
                 <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-3">
@@ -210,8 +260,8 @@ function Index() {
         </section>
 
         <section id="historia" className="section-py bg-[var(--surface-subtle)]">
-          <div className="section-container">
-            <div className="grid grid-12 gap-section-lg items-start">
+          <div data-gsap-section className="section-container">
+            <div data-gsap-item className="grid grid-12 gap-section-lg items-start">
               <div className="col-start-1 col-end-5">
                 <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-3">
                   03 — Nossa história
@@ -238,11 +288,8 @@ function Index() {
         </section>
 
         <section id="diferenciais" className="section-py bg-[var(--surface-subtle)]">
-          <div
-            ref={cuidadoRef}
-            className={`section-container gap-section-lg transition-all duration-1000 ease-out ${revealClass(cuidadoVisible)}`}
-          >
-            <div className="grid grid-12 gap-section-lg items-center">
+          <div data-gsap-section className="section-container gap-section-lg">
+            <div data-gsap-item className="grid grid-12 gap-section-lg items-center">
               {/* Image: cols 1-6 on lg, full on mobile — order-2 on mobile, order-1 on lg */}
               <div className="col-start-1 col-end-7 lg:col-end-7 order-2 lg:order-1 relative aspect-square">
                 <PlateArt className="w-full h-full" />
@@ -273,17 +320,17 @@ function Index() {
         </section>
 
         <section className="section-py bg-[var(--surface-subtle)]" aria-label="Depoimentos">
-          <div
-            ref={depoimentoRef}
-            className={`section-container transition-all duration-1000 ease-out ${revealClass(depoimentoVisible)}`}
-          >
-            <div className="mx-auto mb-10 max-w-3xl text-center">
+          <div data-gsap-section className="section-container">
+            <div data-gsap-item className="mx-auto mb-10 max-w-3xl text-center">
               <p className="text-body-xs text-gold-ink tracking-wider uppercase">
                 05 — Depoimentos
               </p>
               <h2 className="text-display-lg mt-3 text-foreground">Quem recebe, sente.</h2>
             </div>
-            <blockquote className="max-w-3xl mx-auto text-center relative fade-in-up">
+            <blockquote
+              data-gsap-item
+              className="max-w-3xl mx-auto text-center relative fade-in-up"
+            >
               <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-gold-ink text-6xl font-display">
                 "
               </span>
@@ -300,11 +347,8 @@ function Index() {
         </section>
 
         <section id="encomendas" className="section-py bg-[var(--surface-elevated)]">
-          <div
-            ref={encomendasRef}
-            className={`section-container gap-section-lg transition-all duration-1000 ease-out ${revealClass(encomendasVisible)}`}
-          >
-            <div className="grid grid-12 gap-section-lg items-start">
+          <div data-gsap-section className="section-container gap-section-lg">
+            <div data-gsap-item className="grid grid-12 gap-section-lg items-start">
               {/* Left column: cols 1-7 */}
               <div className="col-start-1 col-end-7 lg:col-end-7">
                 <p className="text-body-xs text-gold-soft tracking-wider uppercase mb-3">
@@ -371,14 +415,17 @@ function Index() {
           id="cta-final"
           className="bg-[var(--primary)] py-20 text-[var(--primary-foreground)] lg:py-28"
         >
-          <div className="section-container text-center">
+          <div data-gsap-section className="section-container text-center">
             <p className="text-body-xs uppercase tracking-wider text-[var(--gold-soft)]">
               08 — Um presente começa aqui
             </p>
-            <h2 className="text-display-xl mx-auto mt-4 max-w-3xl text-[var(--primary-foreground)]">
+            <h2
+              data-gsap-item
+              className="text-display-xl mx-auto mt-4 max-w-3xl text-[var(--primary-foreground)]"
+            >
               Quando quiser transformar um momento em presente, fale com a gente.
             </h2>
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <div data-gsap-item className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <a
                 href="/cardapio"
                 className="btn btn-lg bg-[var(--gold-ink)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]"

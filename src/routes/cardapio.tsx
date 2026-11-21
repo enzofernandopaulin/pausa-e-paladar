@@ -1,10 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useLayoutEffect, useRef } from "react";
 import { ArrowDown, ArrowRight, Instagram, MessageCircle } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Header } from "@/components/Header";
 import { Wordmark } from "@/components/Logo";
 import { MenuProductCard } from "@/components/MenuProductCard";
 import { basketItems } from "@/data/basket-images";
 import { getWhatsAppUrl, instagramUrl, menuSections, sizeGuide } from "@/data/menu";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const title = "Nosso Menu — Pausa & Paladar";
 const description =
@@ -27,14 +34,47 @@ export const Route = createFileRoute("/cardapio")({
 });
 
 function MenuPage() {
+  const pageRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const root = pageRef.current;
+    if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const context = gsap.context(() => {
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .from("[data-gsap-menu-hero='copy']", { autoAlpha: 0, y: 24, duration: 0.7 })
+        .from(
+          "[data-gsap-menu-hero='gallery']",
+          { autoAlpha: 0, y: 20, scale: 0.98, duration: 0.85 },
+          "-=0.45",
+        );
+
+      gsap.utils.toArray<HTMLElement>("[data-gsap-menu-section]").forEach((section) => {
+        const items = section.querySelectorAll<HTMLElement>("[data-gsap-menu-item], article");
+        if (!items.length) return;
+        gsap.from(items, {
+          autoAlpha: 0,
+          y: 24,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: section, start: "top 82%", once: true },
+        });
+      });
+    }, root);
+
+    return () => context.revert();
+  }, []);
+
   return (
-    <div id="topo">
+    <div id="topo" ref={pageRef}>
       <Header />
       <main>
         <section className="section-py overflow-hidden" aria-labelledby="menu-title">
           <div className="section-container">
             <div className="grid grid-12 items-start gap-section-lg lg:items-center">
-              <div className="col-start-1 col-end-7 lg:pr-8">
+              <div data-gsap-menu-hero="copy" className="col-start-1 col-end-7 lg:pr-8">
                 <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-5">
                   Pausa & Paladar / 01
                 </p>
@@ -59,7 +99,7 @@ function MenuPage() {
                 </a>
               </div>
 
-              <div className="col-start-7 col-end-13 min-w-0">
+              <div data-gsap-menu-hero="gallery" className="col-start-7 col-end-13 min-w-0">
                 <div className="grid grid-cols-5 items-start gap-4 sm:gap-6 lg:gap-7">
                   <figure className="col-span-3 row-span-2">
                     <div className="relative aspect-[3/4] overflow-hidden bg-[var(--surface-subtle)] p-3 sm:p-4">
@@ -141,12 +181,13 @@ function MenuPage() {
           {menuSections.map((section, index) => (
             <section
               key={section.id}
+              data-gsap-menu-section
               id={section.id}
               className="scroll-mt-36 border-b border-[var(--border-subtle)] py-24 lg:py-32"
               aria-labelledby={`${section.id}-title`}
             >
               <div className="grid grid-12 gap-section-lg items-start">
-                <div className="col-start-1 col-end-4 lg:sticky lg:top-40">
+                <div data-gsap-menu-item className="col-start-1 col-end-4 lg:sticky lg:top-40">
                   <p className="text-body-xs text-gold-ink tracking-wider uppercase">
                     0{index + 1} / Menu
                   </p>

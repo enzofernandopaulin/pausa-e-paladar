@@ -1,4 +1,4 @@
-import basket from "@/assets/cesta-4.jpg";
+import basket from "@/assets/cesta-4.webp";
 const s = {
   fill: "none",
   stroke: "currentColor",
@@ -38,7 +38,7 @@ export function HeroArt() {
           className="block h-full w-full rounded-[var(--radius)] object-cover object-center"
         />
       </div>
-      <div className="absolute z-20 -left-2 top-6 sm:left-4 sm:top-8 grid h-24 w-24 -rotate-12 place-items-center rounded-full border-2 border-gold bg-background/95 backdrop-blur-md text-center tag text-[0.650rem] text-gold shadow-md font-medium">
+      <div className="absolute z-20 -left-2 top-6 sm:left-4 sm:top-8 grid h-24 w-24 -rotate-12 place-items-center rounded-full border-2 border-gold bg-background/95 backdrop-blur-md text-center tag text-[0.650rem] text-gold-ink shadow-md font-medium">
         feito
         <br />à mão
       </div>
@@ -122,7 +122,7 @@ export function CakeArt() {
         strokeWidth="1.5"
       />
       <path d="M20 55 L95 40 L95 34 L20 49z" className="fill-terracotta" />
-      <path d="M20 63 L95 55" {...s} className="text-gold" strokeWidth={3} />
+      <path d="M20 63 L95 55" {...s} className="text-gold-ink" strokeWidth={3} />
       <circle cx="80" cy="28" r="5" className="fill-terracotta" />
       {[0, 72, 144, 216, 288].map((r) => (
         <ellipse

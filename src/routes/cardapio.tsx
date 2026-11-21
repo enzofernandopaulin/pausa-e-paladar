@@ -14,11 +14,13 @@ export const Route = createFileRoute("/cardapio")({
     meta: [
       { title },
       { name: "description", content: description },
+      { property: "og:url", content: "https://pausa-e-paladar.vercel.app/cardapio" },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://pausa-e-paladar.vercel.app/cardapio" }],
   }),
   component: Cardapio,
 });
@@ -32,18 +34,18 @@ function Cardapio() {
           <div className="section-container">
             <div className="grid grid-12 gap-section-lg items-end">
               <div className="col-start-1 col-end-9">
-                <p className="text-body-xs text-gold tracking-wider uppercase mb-5">
+                <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-5">
                   Pausa & Paladar / 01
                 </p>
                 <h1 id="menu-title" className="text-display-2xl text-foreground max-w-[10ch]">
-                  Nosso <em className="text-[var(--gold)] not-italic">Cardápio.</em>
+                  Nosso <em className="text-[var(--gold-ink)] not-italic">Cardápio.</em>
                 </h1>
                 <p className="text-body-lg text-muted-foreground mt-7 max-w-2xl leading-relaxed">
                   Uma seleção especial de sabores, preparada para transformar momentos em memórias.
                 </p>
               </div>
               <div className="col-start-9 col-end-13 hidden lg:block justify-self-end max-w-xs pb-2">
-                <p className="tag text-gold">Feito para celebrar</p>
+                <p className="tag text-gold-ink">Feito para celebrar</p>
                 <p className="mt-4 text-body-sm leading-relaxed text-muted-foreground">
                   Escolha a composição, o tamanho e os detalhes. Para reservar, fale com a gente
                   pelo WhatsApp.
@@ -63,9 +65,9 @@ function Cardapio() {
                 <a
                   key={section.id}
                   href={`#${section.id}`}
-                  className="group inline-flex items-center gap-2 text-foreground/75 transition-colors hover:text-[var(--gold)]"
+                  className="group inline-flex items-center gap-2 text-foreground/75 transition-colors hover:text-[var(--gold-ink)]"
                 >
-                  <span className="font-mono text-[0.68rem] text-gold">0{index + 1}</span>
+                  <span className="font-mono text-[0.68rem] text-gold-ink">0{index + 1}</span>
                   <span>{section.label}</span>
                 </a>
               ))}
@@ -91,7 +93,7 @@ function Cardapio() {
             >
               <div className="grid grid-12 gap-section-lg items-start">
                 <div className="col-start-1 col-end-4 lg:sticky lg:top-40">
-                  <p className="text-body-xs text-gold tracking-wider uppercase">
+                  <p className="text-body-xs text-gold-ink tracking-wider uppercase">
                     0{index + 1} / Cardápio
                   </p>
                   <h2 id={`${section.id}-title`} className="text-display-xl mt-4 text-foreground">
@@ -113,7 +115,9 @@ function Cardapio() {
           <section className="py-20 lg:py-28" aria-labelledby="size-guide-title">
             <div className="grid grid-12 gap-section-lg items-start">
               <div className="col-start-1 col-end-5">
-                <p className="text-body-xs text-gold tracking-wider uppercase">Guia de tamanhos</p>
+                <p className="text-body-xs text-gold-ink tracking-wider uppercase">
+                  Guia de tamanhos
+                </p>
                 <h2 id="size-guide-title" className="text-display-lg mt-4 text-foreground">
                   Escolha o tamanho do momento.
                 </h2>
@@ -121,7 +125,9 @@ function Cardapio() {
               <div className="col-start-5 col-end-13 grid gap-4 md:grid-cols-3">
                 {sizeGuide.map((size) => (
                   <div key={size.label} className="border-t border-[var(--border-emphasis)] pt-5">
-                    <span className="font-display text-5xl text-[var(--gold)]">{size.label}</span>
+                    <span className="font-display text-5xl text-[var(--gold-ink)]">
+                      {size.label}
+                    </span>
                     <p className="mt-3 text-body-sm font-medium text-foreground">{size.weight}</p>
                     <p className="mt-2 text-body-sm leading-relaxed text-muted-foreground">
                       {size.detail}
@@ -159,7 +165,7 @@ function Cardapio() {
                   href={getWhatsAppUrl()}
                   target="_blank"
                   rel="noreferrer"
-                  className="btn btn-lg bg-[var(--gold)] text-[var(--primary)] shadow-[var(--elevation-2)] hover:bg-[var(--gold-soft)]"
+                  className="btn btn-lg bg-[var(--gold-ink)] text-[var(--primary-foreground)] shadow-[var(--elevation-2)] hover:bg-[var(--primary)]"
                 >
                   <MessageCircle size={18} aria-hidden="true" />
                   Pedir pelo WhatsApp
@@ -188,25 +194,25 @@ function Cardapio() {
             <nav aria-label="Rodapé" className="col-start-5 col-end-9 grid grid-cols-2 gap-4">
               <a
                 href="/"
-                className="text-body-sm font-medium text-foreground hover:text-[var(--gold)]"
+                className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)]"
               >
                 Início
               </a>
               <a
                 href="#tabuas"
-                className="text-body-sm font-medium text-foreground hover:text-[var(--gold)]"
+                className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)]"
               >
                 Tábuas
               </a>
               <a
                 href="#cestas"
-                className="text-body-sm font-medium text-foreground hover:text-[var(--gold)]"
+                className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)]"
               >
                 Cestas
               </a>
               <a
                 href="#adicionais"
-                className="text-body-sm font-medium text-foreground hover:text-[var(--gold)]"
+                className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)]"
               >
                 Adicionais
               </a>
@@ -216,7 +222,7 @@ function Cardapio() {
                 href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 hover:text-[var(--gold)]"
+                className="inline-flex items-center gap-2 hover:text-[var(--gold-ink)]"
               >
                 <MessageCircle size={16} aria-hidden="true" /> (13) 99654-2775
               </a>
@@ -224,7 +230,7 @@ function Cardapio() {
                 href={instagramUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 hover:text-[var(--gold)]"
+                className="inline-flex items-center gap-2 hover:text-[var(--gold-ink)]"
               >
                 <Instagram size={16} aria-hidden="true" /> @pausaepaladar
               </a>

@@ -613,7 +613,7 @@ export default function GsapFlipCard({
                 </div>
 
                 <div className="space-y-3 overflow-y-auto px-5 pb-5 pt-4">
-                  <p className="text-[0.7rem] uppercase tracking-[0.16em] text-[var(--gold)]">
+                  <p className="text-[0.7rem] uppercase tracking-[0.16em] text-[var(--gold-ink)]">
                     {String(mobileModalItem + 1).padStart(2, "0")} /{" "}
                     {String(items.length).padStart(2, "0")}
                   </p>

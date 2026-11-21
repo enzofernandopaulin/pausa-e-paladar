@@ -44,6 +44,7 @@
   --primary: oklch(0.33 0.055 128); /* #293E1B */
   --primary-foreground: oklch(0.95 0.025 80);
   --gold: oklch(0.68 0.12 75); /* #C99529 */
+  --gold-ink: oklch(0.48 0.1 75);
   --gold-soft: oklch(0.82 0.1 82);
   --terracotta: oklch(0.6 0.12 45);
   --sage: oklch(0.76 0.04 135);
@@ -164,6 +165,10 @@
   font-size: 0.8rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+@utility text-gold-ink {
+  color: var(--gold-ink);
 }
 
 @utility btn {

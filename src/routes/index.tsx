@@ -15,11 +15,13 @@ export const Route = createFileRoute("/")({
     meta: [
       { title },
       { name: "description", content: desc },
+      { property: "og:url", content: "https://pausa-e-paladar.vercel.app/" },
       { property: "og:title", content: title },
       { property: "og:description", content: desc },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://pausa-e-paladar.vercel.app/" }],
   }),
   component: Index,
 });
@@ -80,13 +82,13 @@ function Index() {
             <div className="grid grid-12 gap-section-lg items-center">
               {/* Content column: cols 1-6 on lg, full on mobile */}
               <div className="col-start-1 col-end-7 lg:col-end-7 text-center lg:text-left flex flex-col items-center lg:items-start">
-                <p className="text-body-xs text-gold tracking-wider uppercase mb-5">
+                <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-5">
                   Presentes gastronômicos artesanais
                 </p>
                 <h1 id="hero-title" className="text-display-2xl text-foreground max-w-[11ch]">
                   Um carinho
                   <br />
-                  em forma de <em className="text-[var(--gold)] not-italic">presente.</em>
+                  em forma de <em className="text-[var(--gold-ink)] not-italic">presente.</em>
                 </h1>
                 <p className="text-body-lg text-muted-foreground mt-7 max-w-md lg:max-w-lg leading-relaxed">
                   Cestas e tábuas montadas à mão para transformar aniversários, manhãs especiais e
@@ -117,11 +119,11 @@ function Index() {
           >
             <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
               <div className="max-w-2xl">
-                <p className="text-body-xs text-gold tracking-wider uppercase mb-3">
+                <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-3">
                   01 — Nosso cardápio
                 </p>
                 <h2 className="text-display-xl text-foreground">
-                  Escolha o seu jeito de <em className="text-[var(--gold)]">celebrar.</em>
+                  Escolha o seu jeito de <em className="text-[var(--gold-ink)]">celebrar.</em>
                 </h2>
                 <p className="mt-5 text-body-md leading-relaxed text-muted-foreground">
                   Cestas e tábuas artesanais para presentear, compartilhar e transformar uma pausa
@@ -166,7 +168,7 @@ function Index() {
             <div className="grid grid-12 gap-section-lg items-start">
               {/* Text column: cols 1-7 */}
               <div className="col-start-1 col-end-7 lg:col-end-7 lg:pr-8">
-                <p className="text-body-xs text-gold tracking-wider uppercase mb-3">
+                <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-3">
                   02 — Personalização
                 </p>
                 <h2 className="text-display-xl text-foreground">
@@ -185,24 +187,24 @@ function Index() {
                 </div>
                 <a
                   href="/cardapio"
-                  className="inline-flex items-center gap-2 text-body-sm font-medium text-foreground hover:text-[var(--gold)] transition-colors mt-6"
+                  className="inline-flex items-center gap-2 text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)] transition-colors mt-6"
                 >
                   Conheça as opções <ArrowRight size={14} />
                 </a>
               </div>
 
               {/* Stats column: cols 7-13 */}
-              <div className="col-start-7 col-end-13 lg:col-end-13 grid grid-cols-3 gap-4 mt-8 lg:mt-0">
+              <dl className="col-start-7 col-end-13 lg:col-end-13 grid grid-cols-3 gap-4 mt-8 lg:mt-0">
                 {stats.map(([n, l]) => (
                   <div
                     key={l}
                     className="text-center p-6 lg:p-8 bg-[var(--surface-subtle)] rounded-xl border border-[var(--border-subtle)]"
                   >
-                    <dt className="font-display text-4xl lg:text-5xl text-gold">{n}</dt>
+                    <dt className="font-display text-4xl lg:text-5xl text-gold-ink">{n}</dt>
                     <dd className="text-body-xs text-muted-foreground mt-2 tracking-wider">{l}</dd>
                   </div>
                 ))}
-              </div>
+              </dl>
             </div>
           </div>
         </section>
@@ -211,7 +213,7 @@ function Index() {
           <div className="section-container">
             <div className="grid grid-12 gap-section-lg items-start">
               <div className="col-start-1 col-end-5">
-                <p className="text-body-xs text-gold tracking-wider uppercase mb-3">
+                <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-3">
                   03 — Nossa história
                 </p>
                 <h2 className="text-display-xl text-foreground">
@@ -247,12 +249,12 @@ function Index() {
               </div>
               {/* Content: cols 7-13 on lg, full on mobile */}
               <div className="col-start-7 col-end-13 lg:col-end-13 order-1 lg:order-2 text-center lg:text-left">
-                <p className="text-body-xs text-gold tracking-wider uppercase mb-3">
+                <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-3">
                   04 — Diferenciais
                 </p>
                 <h2 className="text-display-lg text-foreground">
                   O presente fica ainda mais bonito quando é feito com{" "}
-                  <em className="text-[var(--gold)]">intenção.</em>
+                  <em className="text-[var(--gold-ink)]">intenção.</em>
                 </h2>
                 <ul className="mt-8 space-y-6 text-body-md text-muted-foreground leading-relaxed">
                   {cares.map(({ I, t, d }) => (
@@ -276,11 +278,13 @@ function Index() {
             className={`section-container transition-all duration-1000 ease-out ${revealClass(depoimentoVisible)}`}
           >
             <div className="mx-auto mb-10 max-w-3xl text-center">
-              <p className="text-body-xs text-gold tracking-wider uppercase">05 — Depoimentos</p>
+              <p className="text-body-xs text-gold-ink tracking-wider uppercase">
+                05 — Depoimentos
+              </p>
               <h2 className="text-display-lg mt-3 text-foreground">Quem recebe, sente.</h2>
             </div>
             <blockquote className="max-w-3xl mx-auto text-center relative fade-in-up">
-              <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-gold text-6xl font-display">
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-gold-ink text-6xl font-display">
                 "
               </span>
               <p className="text-display-md text-foreground italic leading-relaxed pb-8 border-b border-[var(--border-subtle)]">
@@ -326,7 +330,7 @@ function Index() {
               </div>
               {/* Right column: cols 7-13 */}
               <div className="col-start-7 col-end-13 lg:col-end-13 space-y-4 pt-4 lg:pt-0">
-                <p className="text-body-xs text-gold uppercase tracking-wider mb-4">
+                <p className="text-body-xs text-gold-ink uppercase tracking-wider mb-4">
                   Como funciona
                 </p>
                 {[
@@ -350,12 +354,12 @@ function Index() {
                     key={n}
                     className="flex gap-4 p-5 bg-[var(--surface-subtle)] rounded-xl border border-[var(--border-subtle)]"
                   >
-                    <span className="font-mono text-body-xs text-gold shrink-0">{n}</span>
+                    <span className="font-mono text-body-xs text-gold-ink shrink-0">{n}</span>
                     <div>
                       <h3 className="font-medium text-body-md text-foreground">{t}</h3>
                       <p className="text-body-sm text-muted-foreground mt-1">{d}</p>
                     </div>
-                    <Check className="mt-auto shrink-0 text-gold size={18}" />
+                    <Check className="mt-auto shrink-0 text-gold-ink size={18}" />
                   </div>
                 ))}
               </div>
@@ -377,7 +381,7 @@ function Index() {
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <a
                 href="/cardapio"
-                className="btn btn-lg bg-[var(--gold)] text-[var(--primary)] hover:bg-[var(--gold-soft)]"
+                className="btn btn-lg bg-[var(--gold-ink)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]"
               >
                 Ver o cardápio <ArrowRight size={18} />
               </a>
@@ -413,7 +417,7 @@ function Index() {
                 <a
                   key={n.href}
                   href={n.href}
-                  className="text-body-sm font-medium text-foreground hover:text-[var(--gold)] transition-colors"
+                  className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)] transition-colors"
                 >
                   {n.label}
                 </a>

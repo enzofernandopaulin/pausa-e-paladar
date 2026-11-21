@@ -17,7 +17,7 @@ const badgeVariants = cva(
         outline:
           "text-foreground border-border hover:bg-surface-elevated hover:border-border-emphasis",
         premium: "border-transparent bg-primary/10 text-primary hover:bg-primary/20",
-        "premium-gold": "border-transparent bg-gold/10 text-gold hover:bg-gold/20",
+        "premium-gold": "border-transparent bg-gold/10 text-gold-ink hover:bg-gold/20",
         "premium-terracotta":
           "border-transparent bg-terracotta/10 text-terracotta hover:bg-terracotta/20",
         "premium-sage": "border-transparent bg-sage/10 text-sage hover:bg-sage/20",

@@ -28,7 +28,7 @@ export function Header() {
             <a
               key={n.href}
               href={n.href}
-              className="text-body-sm font-medium text-foreground/80 hover:text-[var(--gold)] transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gold after:transition-width after:duration-300 hover:after:w-full"
+              className="text-body-sm font-medium text-foreground/80 hover:text-[var(--gold-ink)] transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gold after:transition-width after:duration-300 hover:after:w-full"
             >
               {n.label}
             </a>
@@ -66,7 +66,7 @@ export function Header() {
                 key={n.href}
                 href={n.href}
                 onClick={() => setOpen(false)}
-                className="py-4 border-b font-display text-2xl text-foreground transition-colors hover:text-[var(--gold)]"
+                className="py-4 border-b font-display text-2xl text-foreground transition-colors hover:text-[var(--gold-ink)]"
               >
                 {n.label}
               </a>

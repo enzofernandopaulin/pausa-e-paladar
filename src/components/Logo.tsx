@@ -1,7 +1,7 @@
 export function Logo({ size = 48 }: { size?: number }) {
   return (
     <img
-      src="/logo-pp.jpeg"
+      src="/logo-pp.webp"
       width={size}
       height={size}
       alt="Logotipo P&P — Pausa & Paladar"
@@ -14,7 +14,7 @@ export function Logo({ size = 48 }: { size?: number }) {
 export function Wordmark({ className = "" }: { className?: string }) {
   return (
     <img
-      src="/logo-wordmark.jpeg"
+      src="/logo-wordmark.webp"
       width={1080}
       height={1080}
       loading="lazy"

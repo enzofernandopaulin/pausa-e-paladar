@@ -1,8 +1,8 @@
 import type { GsapFlipCardItem } from "@/components/ui/gsap-card-flip";
-import cesta1 from "@/assets/cesta-1.jpg";
-import cesta2 from "@/assets/cesta-2.jpg";
-import cesta3 from "@/assets/cesta-3.jpg";
-import cesta4 from "@/assets/cesta-4.jpg";
+import cesta1 from "@/assets/cesta-1.webp";
+import cesta2 from "@/assets/cesta-2.webp";
+import cesta3 from "@/assets/cesta-3.webp";
+import cesta4 from "@/assets/cesta-4.webp";
 
 export const basketItems: GsapFlipCardItem[] = [
   {

@@ -64,7 +64,7 @@ export function MenuProductCard({ product, category }: { product: MenuProduct; c
 
         {product.composition && product.composition.length > 0 && (
           <div className="mt-6 border-t border-[var(--border-subtle)] pt-5">
-            <p className="tag text-gold">Composição</p>
+            <p className="tag text-gold-ink">Composição</p>
             <ul className="mt-3 space-y-2 text-body-sm leading-relaxed text-muted-foreground">
               {product.composition.map((item) => (
                 <li key={item} className="flex gap-2">
@@ -81,7 +81,7 @@ export function MenuProductCard({ product, category }: { product: MenuProduct; c
 
         {product.sizes && product.sizes.length > 0 && (
           <fieldset className="mt-6 border-t border-[var(--border-subtle)] pt-5">
-            <legend className="tag text-gold">Escolha o tamanho</legend>
+            <legend className="tag text-gold-ink">Escolha o tamanho</legend>
             <div className="mt-3 grid gap-2 sm:grid-cols-3">
               {product.sizes.map((size) => {
                 const selected = selectedSizeLabel === size.label;
@@ -104,7 +104,7 @@ export function MenuProductCard({ product, category }: { product: MenuProduct; c
                     />
                     <span className="flex items-baseline justify-between gap-2">
                       <span className="font-display text-2xl text-foreground">{size.label}</span>
-                      <span className="text-right text-[0.72rem] font-semibold text-[var(--gold)]">
+                      <span className="text-right text-[0.72rem] font-semibold text-[var(--gold-ink)]">
                         {size.price}
                       </span>
                     </span>
@@ -120,7 +120,7 @@ export function MenuProductCard({ product, category }: { product: MenuProduct; c
 
         {product.options && product.options.length > 0 && (
           <fieldset className="mt-6 border-t border-[var(--border-subtle)] pt-5">
-            <legend className="tag text-gold">
+            <legend className="tag text-gold-ink">
               {product.optionMode === "single" ? "Escolha a embalagem" : "Selecione os adicionais"}
             </legend>
             <div className="mt-3 divide-y divide-[var(--border-subtle)]">

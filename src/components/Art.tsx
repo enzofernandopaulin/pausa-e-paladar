@@ -33,6 +33,8 @@ export function HeroArt() {
           width={1024}
           height={1024}
           alt="Cesta de café da manhã artesanal com flores, frutas e doces"
+          loading="eager"
+          fetchPriority="high"
           className="h-full w-full object-cover object-center rounded-[var(--radius)]"
         />
       </div>

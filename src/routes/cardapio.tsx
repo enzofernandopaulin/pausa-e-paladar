@@ -46,7 +46,7 @@ function MenuPage() {
               </div>
               <div className="col-start-9 col-end-13 hidden lg:block justify-self-end max-w-xs pb-2">
                 <p className="tag text-gold-ink">Feito para celebrar</p>
-                <p className="mt-4 text-body-sm leading-relaxed text-muted-foreground">
+                <p className="mt-4 text-body-md leading-relaxed text-muted-foreground">
                   Escolha a composição, o tamanho e os detalhes. Para reservar, fale com a gente
                   pelo WhatsApp.
                 </p>
@@ -60,7 +60,7 @@ function MenuPage() {
           className="sticky top-20 z-30 border-y border-[var(--border-subtle)] bg-[var(--background)]/95 backdrop-blur-md"
         >
           <div className="section-container overflow-x-auto overscroll-x-contain">
-            <div className="flex w-max min-w-full items-center gap-7 py-3.5 text-body-sm sm:py-4">
+            <div className="flex w-max min-w-full items-center gap-7 py-3.5 text-body-md sm:py-4">
               {menuSections.map((section, index) => (
                 <a
                   key={section.id}
@@ -99,7 +99,7 @@ function MenuPage() {
                   <h2 id={`${section.id}-title`} className="text-display-xl mt-4 text-foreground">
                     {section.label}
                   </h2>
-                  <p className="mt-5 text-body-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-5 text-body-md leading-relaxed text-muted-foreground">
                     {section.intro}
                   </p>
                 </div>
@@ -128,8 +128,8 @@ function MenuPage() {
                     <span className="font-display text-5xl text-[var(--gold-ink)]">
                       {size.label}
                     </span>
-                    <p className="mt-3 text-body-sm font-medium text-foreground">{size.weight}</p>
-                    <p className="mt-2 text-body-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-3 text-body-md font-medium text-foreground">{size.weight}</p>
+                    <p className="mt-2 text-body-md leading-relaxed text-muted-foreground">
                       {size.detail}
                     </p>
                   </div>
@@ -170,7 +170,7 @@ function MenuPage() {
                   <MessageCircle size={18} aria-hidden="true" />
                   Pedir pelo WhatsApp
                 </a>
-                <span className="font-mono text-xs tracking-[0.12em] text-[var(--primary-foreground)]/70">
+                <span className="font-mono text-body-sm tracking-[0.12em] text-[var(--primary-foreground)]/70">
                   (13) 99654-2775
                 </span>
               </div>
@@ -187,37 +187,37 @@ function MenuPage() {
           <div className="grid grid-12 gap-8 lg:gap-12">
             <div className="col-start-1 col-end-5">
               <Wordmark className="w-48 mb-4" />
-              <p className="text-body-sm leading-relaxed text-muted-foreground">
+              <p className="text-body-md leading-relaxed text-muted-foreground">
                 Um convite para celebrar alguém — inclusive você.
               </p>
             </div>
             <nav aria-label="Rodapé" className="col-start-5 col-end-9 grid grid-cols-2 gap-4">
               <a
                 href="/"
-                className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)]"
+                className="text-body-md font-medium text-foreground hover:text-[var(--gold-ink)]"
               >
                 Início
               </a>
               <a
                 href="#tabuas"
-                className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)]"
+                className="text-body-md font-medium text-foreground hover:text-[var(--gold-ink)]"
               >
                 Tábuas
               </a>
               <a
                 href="#cestas"
-                className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)]"
+                className="text-body-md font-medium text-foreground hover:text-[var(--gold-ink)]"
               >
                 Cestas
               </a>
               <a
                 href="#adicionais"
-                className="text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)]"
+                className="text-body-md font-medium text-foreground hover:text-[var(--gold-ink)]"
               >
                 Adicionais
               </a>
             </nav>
-            <div className="col-start-9 col-end-13 flex flex-col gap-3 text-body-sm text-muted-foreground">
+            <div className="col-start-9 col-end-13 flex flex-col gap-3 text-body-md text-muted-foreground">
               <a
                 href={getWhatsAppUrl()}
                 target="_blank"

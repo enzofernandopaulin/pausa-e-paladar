@@ -187,7 +187,7 @@ function Index() {
                 </div>
                 <a
                   href="/cardapio"
-                  className="inline-flex items-center gap-2 text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)] transition-colors mt-6"
+                  className="inline-flex items-center gap-2 text-body-md font-medium text-foreground hover:text-[var(--gold-ink)] transition-colors mt-6"
                 >
                   Conheça as opções do menu <ArrowRight size={14} />
                 </a>
@@ -201,7 +201,7 @@ function Index() {
                     className="text-center p-6 lg:p-8 bg-[var(--surface-subtle)] rounded-xl border border-[var(--border-subtle)]"
                   >
                     <dt className="font-display text-4xl lg:text-5xl text-gold-ink">{n}</dt>
-                    <dd className="text-body-xs text-muted-foreground mt-2 tracking-wider">{l}</dd>
+                    <dd className="text-body-sm text-muted-foreground mt-2 tracking-wider">{l}</dd>
                   </div>
                 ))}
               </dl>
@@ -357,7 +357,7 @@ function Index() {
                     <span className="font-mono text-body-xs text-gold-ink shrink-0">{n}</span>
                     <div>
                       <h3 className="font-medium text-body-md text-foreground">{t}</h3>
-                      <p className="text-body-sm text-muted-foreground mt-1">{d}</p>
+                      <p className="text-body-md text-muted-foreground mt-1">{d}</p>
                     </div>
                     <Check className="mt-auto shrink-0 text-gold-ink size={18}" />
                   </div>
@@ -405,7 +405,7 @@ function Index() {
           <div className="grid grid-12 gap-8 lg:gap-12">
             <div className="col-start-1 col-end-5 lg:col-end-5">
               <Wordmark className="w-48 mb-4" />
-              <p className="text-body-sm text-muted-foreground leading-relaxed">
+              <p className="text-body-md text-muted-foreground leading-relaxed">
                 Um convite para celebrar alguém — inclusive você.
               </p>
             </div>
@@ -423,7 +423,7 @@ function Index() {
                 </a>
               ))}
             </nav>
-            <div className="col-start-9 col-end-13 lg:col-end-13 flex flex-col gap-2 text-body-sm text-muted-foreground">
+            <div className="col-start-9 col-end-13 lg:col-end-13 flex flex-col gap-2 text-body-md text-muted-foreground">
               <span>© 2026 Pausa e Paladar</span>
               <span>Feito com calma, afeto e coisas gostosas.</span>
             </div>

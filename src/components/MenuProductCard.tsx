@@ -32,7 +32,7 @@ function ProductSelectionFields({
       {product.composition && product.composition.length > 0 && (
         <div className="mt-6 border-t border-[var(--border-subtle)] pt-5">
           <p className="tag text-gold-ink">Composição</p>
-          <ul className="mt-3 space-y-2 text-body-sm leading-relaxed text-muted-foreground">
+          <ul className="mt-3 space-y-2 text-body-md leading-relaxed text-muted-foreground">
             {product.composition.map((item) => (
               <li key={item} className="flex gap-2">
                 <span
@@ -71,11 +71,11 @@ function ProductSelectionFields({
                   />
                   <span className="flex items-baseline justify-between gap-2">
                     <span className="font-display text-2xl text-foreground">{size.label}</span>
-                    <span className="text-right text-[0.72rem] font-semibold text-[var(--gold-ink)]">
+                    <span className="text-right text-body-xs font-semibold text-[var(--gold-ink)]">
                       {size.price}
                     </span>
                   </span>
-                  <span className="mt-1 block text-[0.72rem] leading-relaxed text-muted-foreground">
+                  <span className="mt-1 block text-body-xs leading-relaxed text-muted-foreground">
                     {size.serve}
                   </span>
                 </label>
@@ -96,7 +96,7 @@ function ProductSelectionFields({
               return (
                 <label
                   key={option.label}
-                  className="flex min-h-12 cursor-pointer items-center gap-3 py-3 text-body-sm"
+                  className="flex min-h-12 cursor-pointer items-center gap-3 py-3 text-body-md"
                 >
                   <input
                     type={product.optionMode === "single" ? "radio" : "checkbox"}
@@ -211,7 +211,7 @@ export function MenuProductCard({ product, category }: { product: MenuProduct; c
               </span>
             )}
           </div>
-          <p className="mt-3 text-body-sm leading-relaxed text-muted-foreground">
+          <p className="mt-3 text-body-md leading-relaxed text-muted-foreground">
             {product.description}
           </p>
 

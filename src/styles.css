@@ -70,14 +70,14 @@
   --text-display-2xl: clamp(3.25rem, 6vw + 0.5rem, 6.5rem); /* Hero main */
   --text-display-xl: clamp(2.75rem, 4.5vw + 0.5rem, 4.75rem); /* Section titles */
   --text-display-lg: clamp(2.25rem, 3vw + 0.5rem, 3.5rem); /* Subsection titles */
-  --text-display-md: clamp(1.75rem, 2.5vw + 0.25rem, 2.5rem); /* Card titles */
+  --text-display-md: clamp(1.5rem, 1.2vw + 0.75rem, 1.75rem); /* Card titles */
   --text-display-sm: clamp(1.45rem, 1.5vw + 0.5rem, 1.85rem); /* Small titles */
 
   /* Commercial type scale — compact, calm and easy to scan. */
-  --text-body-lg: clamp(1.0625rem, 1vw + 0.75rem, 1.25rem); /* Lead paragraphs */
-  --text-body-md: clamp(0.9375rem, 0.6vw + 0.55rem, 1.0625rem); /* Body text */
-  --text-body-sm: clamp(0.8125rem, 0.45vw + 0.5rem, 0.9375rem); /* Captions */
-  --text-body-xs: clamp(0.6875rem, 0.35vw + 0.45rem, 0.8125rem); /* Meta text */
+  --text-body-lg: clamp(1.125rem, 0.6vw + 0.95rem, 1.25rem); /* Lead paragraphs */
+  --text-body-md: clamp(1rem, 0.45vw + 0.9rem, 1.125rem); /* Body text */
+  --text-body-sm: clamp(0.875rem, 0.35vw + 0.75rem, 1rem); /* Supporting text */
+  --text-body-xs: clamp(0.75rem, 0.25vw + 0.62rem, 0.875rem); /* Meta text */
 
   /* Line heights */
   --leading-display: 1.05;
@@ -162,7 +162,7 @@
 
 @utility tag {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }

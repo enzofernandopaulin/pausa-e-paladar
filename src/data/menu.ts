@@ -2,7 +2,6 @@ import cesta1 from "@/assets/cesta-1.jpg";
 import cesta2 from "@/assets/cesta-2.jpg";
 import cesta3 from "@/assets/cesta-3.jpg";
 import cesta4 from "@/assets/cesta-4.jpg";
-import giftBasket from "@/assets/gift_basket.jpg";
 
 export type MenuSize = {
   label: "P" | "M" | "G";
@@ -23,8 +22,8 @@ export type MenuProduct = {
   composition?: string[];
   sizes?: MenuSize[];
   options?: MenuOption[];
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 export type MenuSection = {
@@ -72,8 +71,7 @@ export const menuSections: MenuSection[] = [
           { label: "M", price: "A partir de R$ 365,00", serve: "Serve até 6 pessoas." },
           { label: "G", price: "A partir de R$ 600,00", serve: "Serve até 10 pessoas." },
         ],
-        image: cesta4,
-        imageAlt: "Tábua premium com queijos, frios, frutas e flores",
+        imageAlt: "Fotografia específica da tábua premium ainda não disponível",
       },
     ],
   },
@@ -134,8 +132,7 @@ export const menuSections: MenuSection[] = [
         name: "Adicionais para tábuas",
         description: "Um complemento para deixar a composição ainda mais especial.",
         composition: ["Vinho: valor a consultar."],
-        image: cesta2,
-        imageAlt: "Tábua artesanal com queijos e frios para compartilhar",
+        imageAlt: "Fotografia específica do adicional para tábuas ainda não disponível",
       },
       {
         id: "adicionais-cestas",
@@ -147,8 +144,7 @@ export const menuSections: MenuSection[] = [
           { label: "Mel", price: "R$ 8,00" },
           { label: "Cappuccino", price: "R$ 5,00" },
         ],
-        image: giftBasket,
-        imageAlt: "Cesta artesanal de presente com flores e itens de café da manhã",
+        imageAlt: "Fotografia específica dos adicionais para cestas ainda não disponível",
       },
       {
         id: "experiencias-sob-encomenda",
@@ -158,8 +154,7 @@ export const menuSections: MenuSection[] = [
           { label: "Cesta para casal", price: "Sob encomenda" },
           { label: "Montagem de mesa de frios", price: "Sob encomenda" },
         ],
-        image: cesta4,
-        imageAlt: "Composição artesanal para uma experiência especial",
+        imageAlt: "Fotografia específica da experiência sob encomenda ainda não disponível",
       },
     ],
   },

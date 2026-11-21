@@ -1,16 +1,29 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ImageOff } from "lucide-react";
 import { type MenuProduct, getWhatsAppUrl } from "@/data/menu";
 
 export function MenuProductCard({ product }: { product: MenuProduct }) {
   return (
     <article className="group overflow-hidden rounded-[var(--image-radius)] border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-[var(--elevation-1)] transition-shadow duration-300 hover:shadow-[var(--elevation-3)]">
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-subtle)]">
-        <img
-          src={product.image}
-          alt={product.imageAlt}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-        />
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={product.imageAlt ?? product.name}
+            loading="lazy"
+            className="block h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div
+            className="flex h-full w-full flex-col items-center justify-center gap-3 px-8 text-center text-muted-foreground"
+            role="img"
+            aria-label={product.imageAlt ?? `Fotografia de ${product.name} não disponível`}
+          >
+            <ImageOff size={28} strokeWidth={1.2} aria-hidden="true" />
+            <span className="max-w-[18rem] font-mono text-[0.68rem] uppercase tracking-[0.14em]">
+              Fotografia específica não disponível no acervo atual
+            </span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/35 via-transparent to-transparent" />
         <span className="absolute bottom-4 left-5 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-white/90">
           Pausa & Paladar

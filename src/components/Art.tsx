@@ -1,4 +1,4 @@
-import basket from "@/assets/gift_basket.jpg";
+import basket from "@/assets/cesta-4.jpg";
 const s = {
   fill: "none",
   stroke: "currentColor",
@@ -32,7 +32,7 @@ export function HeroArt() {
           src={basket}
           width={1024}
           height={1024}
-          alt="Cesta de café da manhã artesanal com flores, frutas e doces"
+          alt="Cesta artesanal com croissants, suco, queijos, frios, frutas e doces"
           loading="eager"
           fetchPriority="high"
           className="block h-full w-full rounded-[var(--radius)] object-cover object-center"

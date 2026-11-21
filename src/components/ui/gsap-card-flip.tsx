@@ -249,7 +249,7 @@ export default function GsapFlipCard({
     opened && !isMobile && typeof window !== "undefined" ? window.innerWidth : stageWidth;
   const railCount = Math.max(items.length - 1, 0);
   const widthScale = isNarrow ? Math.min(1, stageWidth / 900) : 1;
-  const heightScale = viewportHeight > 0 ? Math.min(1, (viewportHeight * 0.82) / heroHeight) : 1;
+  const heightScale = viewportHeight > 0 ? Math.min(1, (viewportHeight * 0.72) / heroHeight) : 1;
   const scale = Math.min(widthScale, heightScale);
   const tW = thumbWidth * scale;
   const tH = thumbHeight * scale;
@@ -539,14 +539,14 @@ export default function GsapFlipCard({
               type="button"
               onClick={() => openMobileModal(heroItemIndex)}
               aria-label={`Ampliar imagem: ${heroItem.alt ?? `Imagem ${heroSlotLabel}`}`}
-              className="relative w-full flex-1 min-h-[45svh] overflow-hidden bg-[#fafafa] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18),_0_0_0_1px_rgba(0,0,0,0.04)]"
+              className="relative h-[58svh] max-h-[34rem] min-h-[18rem] w-full flex-none overflow-hidden bg-[#fafafa] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.18),_0_0_0_1px_rgba(0,0,0,0.04)]"
               style={{ borderRadius: rounded }}
             >
               <img
                 src={heroItem.image}
                 alt={heroItem.alt ?? ""}
                 draggable={false}
-                className="absolute inset-0 h-full w-full object-cover rounded-[inherit]"
+                className="absolute inset-0 h-full w-full rounded-[inherit] object-contain p-2"
               />
             </button>
           )}
@@ -598,7 +598,7 @@ export default function GsapFlipCard({
                     src={item.image}
                     alt={item.alt ?? ""}
                     draggable={false}
-                    className="absolute inset-0 h-full w-full object-cover rounded-[inherit]"
+                    className="absolute inset-0 h-full w-full rounded-[inherit] object-contain p-1"
                   />
                 </button>
               );
@@ -761,7 +761,7 @@ export default function GsapFlipCard({
                 src={item.image}
                 alt={item.alt ?? ""}
                 draggable={false}
-                className="absolute inset-0 h-full w-full object-cover rounded-[inherit]"
+                className="absolute inset-0 h-full w-full rounded-[inherit] object-contain p-[clamp(0.35rem,0.8vw,0.75rem)]"
               />
             </button>
           );

@@ -1,6 +1,6 @@
 {
   "routes": [
     { "path": "/", "title": "Pausa & Paladar" },
-    { "path": "/cardapio", "title": "Cardápio — Pausa & Paladar" }
+    { "path": "/cardapio", "title": "Menu — Pausa & Paladar" }
   ]
 }

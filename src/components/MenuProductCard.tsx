@@ -11,6 +11,9 @@ export function MenuProductCard({ product, category }: { product: MenuProduct; c
     () => product.options?.filter((option) => selectedOptionLabels.includes(option.label)) ?? [],
     [product.options, selectedOptionLabels],
   );
+  const referencePrice =
+    product.sizes?.[0]?.price ??
+    (product.options?.length === 1 ? product.options[0]?.price : undefined);
   const whatsappHref = getWhatsAppUrl(product.name, {
     category,
     size: selectedSize,
@@ -30,13 +33,13 @@ export function MenuProductCard({ product, category }: { product: MenuProduct; c
 
   return (
     <article className="group overflow-hidden rounded-[var(--image-radius)] border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-[var(--elevation-1)] transition-shadow duration-300 hover:shadow-[var(--elevation-3)]">
-      <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-subtle)]">
+      <div className="relative aspect-[4/5] overflow-hidden border-b border-[var(--border-subtle)] bg-[var(--surface-subtle)] p-4 sm:p-6">
         {product.image ? (
           <img
             src={product.image}
             alt={product.imageAlt ?? product.name}
             loading="lazy"
-            className="block h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+            className="block h-full w-full object-contain transition-opacity duration-500 group-hover:opacity-90"
           />
         ) : (
           <div
@@ -50,14 +53,20 @@ export function MenuProductCard({ product, category }: { product: MenuProduct; c
             </span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)]/35 via-transparent to-transparent" />
-        <span className="absolute bottom-4 left-5 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-white/90">
+        <span className="absolute bottom-4 left-5 rounded-full bg-[var(--background)]/90 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[var(--gold-ink)] shadow-sm">
           Pausa & Paladar
         </span>
       </div>
 
       <div className="p-6 sm:p-8">
-        <h3 className="text-display-md text-foreground">{product.name}</h3>
+        <div className="flex items-start justify-between gap-5">
+          <h3 className="text-display-md text-foreground">{product.name}</h3>
+          {referencePrice && (
+            <span className="shrink-0 pt-1 text-right font-display text-lg leading-tight text-[var(--gold-ink)]">
+              {referencePrice}
+            </span>
+          )}
+        </div>
         <p className="mt-3 text-body-sm leading-relaxed text-muted-foreground">
           {product.description}
         </p>

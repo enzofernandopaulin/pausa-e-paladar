@@ -4,7 +4,7 @@ import { Wordmark } from "@/components/Logo";
 import { getWhatsAppUrl } from "@/data/menu";
 
 const nav = [
-  { href: "/cardapio", label: "Cardápio" },
+  { href: "/cardapio", label: "Menu" },
   { href: "/#personalizacao", label: "Personalização" },
   { href: "/#historia", label: "Nossa história" },
   { href: "/#encomendas", label: "Encomendas" },

@@ -5,7 +5,7 @@ import { Wordmark } from "@/components/Logo";
 import { MenuProductCard } from "@/components/MenuProductCard";
 import { getWhatsAppUrl, instagramUrl, menuSections, sizeGuide } from "@/data/menu";
 
-const title = "Nosso Cardápio — Pausa & Paladar";
+const title = "Nosso Menu — Pausa & Paladar";
 const description =
   "Uma seleção especial de sabores, preparada para transformar momentos em memórias. Tábuas, cestas e experiências artesanais sob encomenda.";
 
@@ -22,10 +22,10 @@ export const Route = createFileRoute("/cardapio")({
     ],
     links: [{ rel: "canonical", href: "https://pausa-e-paladar.vercel.app/cardapio" }],
   }),
-  component: Cardapio,
+  component: MenuPage,
 });
 
-function Cardapio() {
+function MenuPage() {
   return (
     <div id="topo">
       <Header />
@@ -38,7 +38,7 @@ function Cardapio() {
                   Pausa & Paladar / 01
                 </p>
                 <h1 id="menu-title" className="text-display-2xl text-foreground max-w-[10ch]">
-                  Nosso <em className="text-[var(--gold-ink)] not-italic">Cardápio.</em>
+                  Nosso <em className="text-[var(--gold-ink)] not-italic">Menu.</em>
                 </h1>
                 <p className="text-body-lg text-muted-foreground mt-7 max-w-2xl leading-relaxed">
                   Uma seleção especial de sabores, preparada para transformar momentos em memórias.
@@ -56,7 +56,7 @@ function Cardapio() {
         </section>
 
         <nav
-          aria-label="Categorias do cardápio"
+          aria-label="Categorias do menu"
           className="sticky top-20 z-30 border-y border-[var(--border-subtle)] bg-[var(--background)]/95 backdrop-blur-md"
         >
           <div className="section-container overflow-x-auto overscroll-x-contain">
@@ -88,13 +88,13 @@ function Cardapio() {
             <section
               key={section.id}
               id={section.id}
-              className="scroll-mt-36 border-b border-[var(--border-subtle)] py-20 lg:py-28"
+              className="scroll-mt-36 border-b border-[var(--border-subtle)] py-24 lg:py-32"
               aria-labelledby={`${section.id}-title`}
             >
               <div className="grid grid-12 gap-section-lg items-start">
                 <div className="col-start-1 col-end-4 lg:sticky lg:top-40">
                   <p className="text-body-xs text-gold-ink tracking-wider uppercase">
-                    0{index + 1} / Cardápio
+                    0{index + 1} / Menu
                   </p>
                   <h2 id={`${section.id}-title`} className="text-display-xl mt-4 text-foreground">
                     {section.label}
@@ -103,7 +103,7 @@ function Cardapio() {
                     {section.intro}
                   </p>
                 </div>
-                <div className="col-start-4 col-end-13 grid gap-6 md:grid-cols-2">
+                <div className="col-start-4 col-end-13 grid gap-8 xl:gap-10 md:grid-cols-2">
                   {section.products.map((product) => (
                     <MenuProductCard key={product.id} product={product} category={section.label} />
                   ))}

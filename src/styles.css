@@ -614,12 +614,12 @@
   }
 
   /* The category rail may scroll horizontally, but the document itself must not. */
-  [aria-label="Categorias do cardápio"] .section-container {
+  [aria-label="Categorias do menu"] .section-container {
     overscroll-behavior-x: contain;
     scrollbar-width: thin;
   }
 
-  [aria-label="Categorias do cardápio"] .section-container > div {
+  [aria-label="Categorias do menu"] .section-container > div {
     width: max-content;
     max-width: none;
   }

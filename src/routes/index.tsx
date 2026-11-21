@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
 });
 
 const nav = [
-  { href: "/cardapio", label: "Cardápio" },
+  { href: "/cardapio", label: "Menu" },
   { href: "#personalizacao", label: "Personalização" },
   { href: "#historia", label: "Nossa história" },
   { href: "#encomendas", label: "Encomendas" },
@@ -95,7 +95,7 @@ function Index() {
                   todos aqueles “lembrei de você” em experiências afetivas.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 mt-9 items-center">
-                  <a href="#cardapio" className="btn btn-premium btn-lg w-full sm:w-auto">
+                  <a href="#menu" className="btn btn-premium btn-lg w-full sm:w-auto">
                     Conheça nossas coleções <ArrowRight size={18} />
                   </a>
                   <a href="#encomendas" className="btn btn-premium-outline btn-lg w-full sm:w-auto">
@@ -112,7 +112,7 @@ function Index() {
           </div>
         </section>
 
-        <section id="cardapio" className="section-py">
+        <section id="menu" className="section-py">
           <div
             ref={colecoesRef}
             className={`section-container transition-all duration-1000 ease-out ${revealClass(colecoesVisible)}`}
@@ -120,7 +120,7 @@ function Index() {
             <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
               <div className="max-w-2xl">
                 <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-3">
-                  01 — Nosso cardápio
+                  01 — Nosso menu
                 </p>
                 <h2 className="text-display-xl text-foreground">
                   Escolha o seu jeito de <em className="text-[var(--gold-ink)]">celebrar.</em>
@@ -131,7 +131,7 @@ function Index() {
                 </p>
               </div>
               <a href="/cardapio" className="btn btn-premium-outline btn-lg shrink-0">
-                Ver cardápio completo <ArrowRight size={18} />
+                Ver menu completo <ArrowRight size={18} />
               </a>
             </div>
 
@@ -189,7 +189,7 @@ function Index() {
                   href="/cardapio"
                   className="inline-flex items-center gap-2 text-body-sm font-medium text-foreground hover:text-[var(--gold-ink)] transition-colors mt-6"
                 >
-                  Conheça as opções <ArrowRight size={14} />
+                  Conheça as opções do menu <ArrowRight size={14} />
                 </a>
               </div>
 
@@ -383,7 +383,7 @@ function Index() {
                 href="/cardapio"
                 className="btn btn-lg bg-[var(--gold-ink)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]"
               >
-                Ver o cardápio <ArrowRight size={18} />
+                Ver o menu <ArrowRight size={18} />
               </a>
               <a
                 href={getWhatsAppUrl()}

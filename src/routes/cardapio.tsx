@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Instagram, MessageCircle } from "lucide-react";
+import { ArrowDown, ArrowRight, Instagram, MessageCircle } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Wordmark } from "@/components/Logo";
 import { MenuProductCard } from "@/components/MenuProductCard";
+import { basketItems } from "@/data/basket-images";
 import { getWhatsAppUrl, instagramUrl, menuSections, sizeGuide } from "@/data/menu";
 
 const title = "Nosso Menu — Pausa & Paladar";
@@ -32,8 +33,8 @@ function MenuPage() {
       <main>
         <section className="section-py overflow-hidden" aria-labelledby="menu-title">
           <div className="section-container">
-            <div className="grid grid-12 gap-section-lg items-end">
-              <div className="col-start-1 col-end-9">
+            <div className="grid grid-12 items-start gap-section-lg lg:items-center">
+              <div className="col-start-1 col-end-7 lg:pr-8">
                 <p className="text-body-xs text-gold-ink tracking-wider uppercase mb-5">
                   Pausa & Paladar / 01
                 </p>
@@ -43,13 +44,66 @@ function MenuPage() {
                 <p className="text-body-lg text-muted-foreground mt-7 max-w-2xl leading-relaxed">
                   Uma seleção especial de sabores, preparada para transformar momentos em memórias.
                 </p>
+                <div className="mt-8 max-w-sm border-t border-[var(--border-subtle)] pt-5">
+                  <p className="tag text-gold-ink">Feito para celebrar</p>
+                  <p className="mt-4 text-body-md leading-relaxed text-muted-foreground">
+                    Escolha a composição, o tamanho e os detalhes. Para reservar, fale com a gente
+                    pelo WhatsApp.
+                  </p>
+                </div>
+                <a
+                  href="#tabuas"
+                  className="mt-10 inline-flex items-center gap-3 font-mono text-body-xs uppercase tracking-[0.14em] text-[var(--gold-ink)] transition-colors hover:text-[var(--primary)]"
+                >
+                  Explore nossas coleções <ArrowDown size={15} aria-hidden="true" />
+                </a>
               </div>
-              <div className="col-start-9 col-end-13 hidden lg:block justify-self-end max-w-xs pb-2">
-                <p className="tag text-gold-ink">Feito para celebrar</p>
-                <p className="mt-4 text-body-md leading-relaxed text-muted-foreground">
-                  Escolha a composição, o tamanho e os detalhes. Para reservar, fale com a gente
-                  pelo WhatsApp.
-                </p>
+
+              <div className="col-start-7 col-end-13 min-w-0">
+                <div className="grid grid-cols-5 items-start gap-4 sm:gap-6 lg:gap-7">
+                  <figure className="col-span-3 row-span-2">
+                    <div className="relative aspect-[3/4] overflow-hidden bg-[var(--surface-subtle)] p-3 sm:p-4">
+                      <img
+                        src={basketItems[1].image}
+                        alt={basketItems[1].alt}
+                        className="h-full w-full object-contain"
+                        loading="eager"
+                      />
+                    </div>
+                    <figcaption className="mt-3 flex items-center justify-between gap-3 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-[var(--gold-ink)]">
+                      <span>01 — Tábuas artesanais</span>
+                      <span aria-hidden="true">↗</span>
+                    </figcaption>
+                  </figure>
+
+                  <figure className="col-span-2 mt-10 sm:mt-14">
+                    <div className="relative aspect-[4/5] overflow-hidden bg-[var(--surface-subtle)] p-2.5 sm:p-3">
+                      <img
+                        src={basketItems[0].image}
+                        alt={basketItems[0].alt}
+                        className="h-full w-full object-contain"
+                        loading="eager"
+                      />
+                    </div>
+                    <figcaption className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-[var(--gold-ink)]">
+                      02 — Cestas especiais
+                    </figcaption>
+                  </figure>
+
+                  <figure className="col-span-2 mt-2 sm:mt-4">
+                    <div className="relative aspect-square overflow-hidden bg-[var(--surface-subtle)] p-2.5 sm:p-3">
+                      <img
+                        src={basketItems[3].image}
+                        alt={basketItems[3].alt}
+                        className="h-full w-full object-contain"
+                        loading="eager"
+                      />
+                    </div>
+                    <figcaption className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-[var(--gold-ink)]">
+                      03 — Presentes gastronômicos
+                    </figcaption>
+                  </figure>
+                </div>
               </div>
             </div>
           </div>

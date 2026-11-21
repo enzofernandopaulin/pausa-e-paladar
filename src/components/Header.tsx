@@ -4,8 +4,8 @@ import { Wordmark } from "@/components/Logo";
 
 const nav = [
   { href: "/cardapio", label: "Cardápio" },
-  { href: "/#a-marca", label: "A marca" },
-  { href: "/#colecoes", label: "Cestas & tábuas" },
+  { href: "/#personalizacao", label: "Personalização" },
+  { href: "/#historia", label: "Nossa história" },
   { href: "/#encomendas", label: "Encomendas" },
 ];
 

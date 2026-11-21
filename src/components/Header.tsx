@@ -3,9 +3,10 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import { Wordmark } from "@/components/Logo";
 
 const nav = [
-  { href: "#a-marca", label: "A marca" },
-  { href: "#colecoes", label: "Cestas & tábuas" },
-  { href: "#encomendas", label: "Encomendas" },
+  { href: "/cardapio", label: "Cardápio" },
+  { href: "/#a-marca", label: "A marca" },
+  { href: "/#colecoes", label: "Cestas & tábuas" },
+  { href: "/#encomendas", label: "Encomendas" },
 ];
 
 export function Header() {
@@ -31,7 +32,7 @@ export function Header() {
               {n.label}
             </a>
           ))}
-          <a href="#encomendas" className="btn btn-premium btn-sm hidden md:flex">
+          <a href="/#encomendas" className="btn btn-premium btn-sm hidden md:flex">
             <span>Fazer encomenda</span>
             <ArrowRight size={14} />
           </a>
@@ -65,7 +66,7 @@ export function Header() {
               </a>
             ))}
             <a
-              href="#encomendas"
+              href="/#encomendas"
               onClick={() => setOpen(false)}
               className="btn btn-premium btn-lg mt-6 w-full justify-center"
             >

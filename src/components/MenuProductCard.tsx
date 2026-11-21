@@ -1,7 +1,33 @@
+import { useMemo, useState } from "react";
 import { ArrowUpRight, ImageOff } from "lucide-react";
 import { type MenuProduct, getWhatsAppUrl } from "@/data/menu";
 
-export function MenuProductCard({ product }: { product: MenuProduct }) {
+export function MenuProductCard({ product, category }: { product: MenuProduct; category: string }) {
+  const [selectedSizeLabel, setSelectedSizeLabel] = useState<string>();
+  const [selectedOptionLabels, setSelectedOptionLabels] = useState<string[]>([]);
+
+  const selectedSize = product.sizes?.find((size) => size.label === selectedSizeLabel);
+  const selectedOptions = useMemo(
+    () => product.options?.filter((option) => selectedOptionLabels.includes(option.label)) ?? [],
+    [product.options, selectedOptionLabels],
+  );
+  const whatsappHref = getWhatsAppUrl(product.name, {
+    category,
+    size: selectedSize,
+    options: selectedOptions,
+  });
+
+  const toggleOption = (label: string) => {
+    if (product.optionMode === "single") {
+      setSelectedOptionLabels([label]);
+      return;
+    }
+
+    setSelectedOptionLabels((current) =>
+      current.includes(label) ? current.filter((item) => item !== label) : [...current, label],
+    );
+  };
+
   return (
     <article className="group overflow-hidden rounded-[var(--image-radius)] border border-[var(--border-subtle)] bg-[var(--surface-elevated)] shadow-[var(--elevation-1)] transition-shadow duration-300 hover:shadow-[var(--elevation-3)]">
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-subtle)]">
@@ -54,45 +80,78 @@ export function MenuProductCard({ product }: { product: MenuProduct }) {
         )}
 
         {product.sizes && product.sizes.length > 0 && (
-          <div className="mt-6 border-t border-[var(--border-subtle)] pt-5">
-            <p className="tag text-gold">Tamanhos</p>
+          <fieldset className="mt-6 border-t border-[var(--border-subtle)] pt-5">
+            <legend className="tag text-gold">Escolha o tamanho</legend>
             <div className="mt-3 grid gap-2 sm:grid-cols-3">
-              {product.sizes.map((size) => (
-                <div key={size.label} className="rounded-lg bg-[var(--surface-subtle)] p-3">
-                  <div className="flex items-baseline justify-between gap-2">
-                    <span className="font-display text-2xl text-foreground">{size.label}</span>
-                    <span className="text-right text-[0.72rem] font-semibold text-[var(--gold)]">
-                      {size.price}
+              {product.sizes.map((size) => {
+                const selected = selectedSizeLabel === size.label;
+                return (
+                  <label
+                    key={size.label}
+                    className={`cursor-pointer rounded-lg border p-3 transition-colors ${
+                      selected
+                        ? "border-[var(--gold)] bg-[var(--gold)]/10"
+                        : "border-transparent bg-[var(--surface-subtle)] hover:border-[var(--gold)]/50"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name={`${product.id}-size`}
+                      value={size.label}
+                      checked={selected}
+                      onChange={() => setSelectedSizeLabel(size.label)}
+                      className="sr-only"
+                    />
+                    <span className="flex items-baseline justify-between gap-2">
+                      <span className="font-display text-2xl text-foreground">{size.label}</span>
+                      <span className="text-right text-[0.72rem] font-semibold text-[var(--gold)]">
+                        {size.price}
+                      </span>
                     </span>
-                  </div>
-                  <p className="mt-1 text-[0.72rem] leading-relaxed text-muted-foreground">
-                    {size.serve}
-                  </p>
-                </div>
-              ))}
+                    <span className="mt-1 block text-[0.72rem] leading-relaxed text-muted-foreground">
+                      {size.serve}
+                    </span>
+                  </label>
+                );
+              })}
             </div>
-          </div>
+          </fieldset>
         )}
 
         {product.options && product.options.length > 0 && (
-          <div className="mt-6 border-t border-[var(--border-subtle)] pt-5">
-            <p className="tag text-gold">Opções</p>
+          <fieldset className="mt-6 border-t border-[var(--border-subtle)] pt-5">
+            <legend className="tag text-gold">
+              {product.optionMode === "single" ? "Escolha a embalagem" : "Selecione os adicionais"}
+            </legend>
             <div className="mt-3 divide-y divide-[var(--border-subtle)]">
-              {product.options.map((option) => (
-                <div
-                  key={option.label}
-                  className="flex items-center justify-between gap-4 py-2 text-body-sm"
-                >
-                  <span className="text-muted-foreground">{option.label}</span>
-                  <span className="shrink-0 font-medium text-foreground">{option.price}</span>
-                </div>
-              ))}
+              {product.options.map((option) => {
+                const selected = selectedOptionLabels.includes(option.label);
+                return (
+                  <label
+                    key={option.label}
+                    className="flex cursor-pointer items-center gap-3 py-3 text-body-sm"
+                  >
+                    <input
+                      type={product.optionMode === "single" ? "radio" : "checkbox"}
+                      name={`${product.id}-options`}
+                      value={option.label}
+                      checked={selected}
+                      onChange={() => toggleOption(option.label)}
+                      className="h-4 w-4 accent-[var(--gold)]"
+                    />
+                    <span className="flex flex-1 items-center justify-between gap-4">
+                      <span className="text-muted-foreground">{option.label}</span>
+                      <span className="shrink-0 font-medium text-foreground">{option.price}</span>
+                    </span>
+                  </label>
+                );
+              })}
             </div>
-          </div>
+          </fieldset>
         )}
 
         <a
-          href={getWhatsAppUrl(product.name)}
+          href={whatsappHref}
           target="_blank"
           rel="noreferrer"
           className="btn btn-premium mt-7 w-full"

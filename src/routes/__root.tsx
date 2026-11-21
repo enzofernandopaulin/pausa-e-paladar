@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MessageCircle } from "lucide-react";
 import {
   Outlet,
   Link,
@@ -12,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { getWhatsAppUrl } from "@/data/menu";
 
 function NotFoundComponent() {
   return (
@@ -120,6 +122,15 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <a
+        href={getWhatsAppUrl()}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Falar com a Pausa & Paladar pelo WhatsApp"
+        className="fixed bottom-5 right-5 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--elevation-3)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 sm:bottom-7 sm:right-7"
+      >
+        <MessageCircle size={20} aria-hidden="true" />
+      </a>
     </QueryClientProvider>
   );
 }

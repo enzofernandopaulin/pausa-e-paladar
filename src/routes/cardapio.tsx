@@ -103,7 +103,7 @@ function Cardapio() {
                 </div>
                 <div className="col-start-4 col-end-13 grid gap-6 md:grid-cols-2">
                   {section.products.map((product) => (
-                    <MenuProductCard key={product.id} product={product} />
+                    <MenuProductCard key={product.id} product={product} category={section.label} />
                   ))}
                 </div>
               </div>

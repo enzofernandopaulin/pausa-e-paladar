@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Wordmark } from "@/components/Logo";
+import { getWhatsAppUrl } from "@/data/menu";
 
 const nav = [
   { href: "/cardapio", label: "Cardápio" },
@@ -32,7 +33,12 @@ export function Header() {
               {n.label}
             </a>
           ))}
-          <a href="/#encomendas" className="btn btn-premium btn-sm hidden md:flex">
+          <a
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-premium btn-sm hidden md:flex"
+          >
             <span>Fazer encomenda</span>
             <ArrowRight size={14} />
           </a>
@@ -66,7 +72,9 @@ export function Header() {
               </a>
             ))}
             <a
-              href="/#encomendas"
+              href={getWhatsAppUrl()}
+              target="_blank"
+              rel="noreferrer"
               onClick={() => setOpen(false)}
               className="btn btn-premium btn-lg mt-6 w-full justify-center"
             >

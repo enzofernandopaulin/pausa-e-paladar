@@ -15,6 +15,12 @@ export type MenuOption = {
   price: string;
 };
 
+export type MenuOrderSelection = {
+  category?: string;
+  size?: MenuSize;
+  options?: MenuOption[];
+};
+
 export type MenuProduct = {
   id: string;
   name: string;
@@ -22,6 +28,7 @@ export type MenuProduct = {
   composition?: string[];
   sizes?: MenuSize[];
   options?: MenuOption[];
+  optionMode?: "single" | "multiple";
   image?: string;
   imageAlt?: string;
 };
@@ -89,6 +96,7 @@ export const menuSections: MenuSection[] = [
           { label: "Caixa Kraft", price: "R$ 110,00" },
           { label: "Bandeja MDF", price: "R$ 125,00" },
         ],
+        optionMode: "single",
         image: cesta1,
         imageAlt: "Cesta de café da manhã com pães, frios, frutas e suco",
       },
@@ -103,6 +111,7 @@ export const menuSections: MenuSection[] = [
           { label: "Caixa Kraft", price: "R$ 160,00" },
           { label: "Bandeja MDF", price: "R$ 175,00" },
         ],
+        optionMode: "single",
         image: cesta3,
         imageAlt: "Cesta artesanal com waffles, croissants, frutas e doces",
       },
@@ -117,6 +126,7 @@ export const menuSections: MenuSection[] = [
           { label: "Caixa Kraft", price: "R$ 195,00" },
           { label: "Bandeja MDF", price: "R$ 210,00" },
         ],
+        optionMode: "single",
         image: cesta4,
         imageAlt: "Cesta premium com flores, frutas, queijos, frios e doces",
       },
@@ -144,6 +154,7 @@ export const menuSections: MenuSection[] = [
           { label: "Mel", price: "R$ 8,00" },
           { label: "Cappuccino", price: "R$ 5,00" },
         ],
+        optionMode: "multiple",
         imageAlt: "Fotografia específica dos adicionais para cestas ainda não disponível",
       },
       {
@@ -154,6 +165,7 @@ export const menuSections: MenuSection[] = [
           { label: "Cesta para casal", price: "Sob encomenda" },
           { label: "Montagem de mesa de frios", price: "Sob encomenda" },
         ],
+        optionMode: "multiple",
         imageAlt: "Fotografia específica da experiência sob encomenda ainda não disponível",
       },
     ],
@@ -181,9 +193,23 @@ export const sizeGuide = [
 export const whatsappNumber = "5513996542775";
 export const instagramUrl = "https://instagram.com/pausaepaladar";
 
-export function getWhatsAppUrl(productName?: string) {
+export function getWhatsAppUrl(productName?: string, selection?: MenuOrderSelection) {
   const message = productName
-    ? `Olá! Quero fazer uma encomenda de ${productName}. Gostaria de saber mais detalhes.`
+    ? [
+        "Olá! Gostaria de fazer uma encomenda na Pausa & Paladar.",
+        "",
+        `Produto: ${productName}`,
+        selection?.category ? `Categoria: ${selection.category}` : undefined,
+        selection?.size ? `Tamanho: ${selection.size.label}` : undefined,
+        selection?.size ? `Valor inicial: ${selection.size.price}` : undefined,
+        selection?.options?.length
+          ? `Opção${selection.options.length > 1 ? "ões" : ""}: ${selection.options.map((option) => `${option.label} (${option.price})`).join(", ")}`
+          : undefined,
+        "",
+        "Gostaria de saber mais sobre a disponibilidade.",
+      ]
+        .filter(Boolean)
+        .join("\n")
     : "Olá! Quero fazer uma encomenda no Pausa & Paladar.";
 
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;

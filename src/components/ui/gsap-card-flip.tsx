@@ -10,6 +10,7 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
+import { createPortal } from "react-dom";
 import gsap from "gsap";
 import { Flip } from "gsap/Flip";
 import { SplitText } from "gsap/SplitText";
@@ -182,6 +183,7 @@ export default function GsapFlipCard({
   const [opened, setOpened] = useState(false);
   const [mobileModalItem, setMobileModalItem] = useState<number | null>(null);
   const [stageWidth, setStageWidth] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(0);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
@@ -211,6 +213,23 @@ export default function GsapFlipCard({
     return () => ro.disconnect();
   }, []);
 
+  useEffect(() => {
+    const measure = () => setViewportHeight(window.innerHeight);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (opened) setStageWidth(window.innerWidth);
+      else if (rootRef.current) setStageWidth(rootRef.current.clientWidth);
+    };
+    measure();
+    const frame = requestAnimationFrame(measure);
+    return () => cancelAnimationFrame(frame);
+  }, [opened]);
+
   const registerCard = useCallback((index: number, node: HTMLButtonElement | null) => {
     if (node) cardRefs.current.set(index, node);
     else cardRefs.current.delete(index);
@@ -226,16 +245,20 @@ export default function GsapFlipCard({
   // modes, so real tablets and small laptop windows keep the Flip experience.
   const isMobile = stageWidth > 0 && stageWidth < 768;
   const isNarrow = stageWidth > 0 && stageWidth < 900;
+  const layoutWidth =
+    opened && !isMobile && typeof window !== "undefined" ? window.innerWidth : stageWidth;
   const railCount = Math.max(items.length - 1, 0);
-  const scale = isNarrow ? Math.min(1, stageWidth / 900) : 1;
+  const widthScale = isNarrow ? Math.min(1, stageWidth / 900) : 1;
+  const heightScale = viewportHeight > 0 ? Math.min(1, (viewportHeight * 0.82) / heroHeight) : 1;
+  const scale = Math.min(widthScale, heightScale);
   const tW = thumbWidth * scale;
   const tH = thumbHeight * scale;
   const gap = thumbGap * scale;
-  const hW = Math.min(heroWidth * scale, stageWidth * 0.46);
+  const hW = Math.min(heroWidth * scale, layoutWidth * 0.46);
   const hH = heroHeight * (hW / heroWidth || 1);
-  const railX = Math.max(24, stageWidth * 0.045);
-  const heroX = stageWidth - hW - railX;
-  const stackWidth = Math.min(215 * scale, stageWidth * 0.42);
+  const railX = Math.max(24, layoutWidth * 0.045);
+  const heroX = layoutWidth - hW - railX;
+  const stackWidth = Math.min(215 * scale, layoutWidth * 0.42);
   const stackHeight = stackWidth * 1.5;
 
   const slotBox = useCallback(
@@ -442,13 +465,13 @@ export default function GsapFlipCard({
   }, [order, select, close, closeMobileModal, mobileModalItem, opened, items.length]);
 
   useEffect(() => {
-    if (mobileModalItem === null) return;
+    if (!opened && mobileModalItem === null) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [mobileModalItem]);
+  }, [opened, mobileModalItem]);
 
   if (items.length === 0) return null;
 
@@ -582,78 +605,95 @@ export default function GsapFlipCard({
             })}
           </div>
 
-          {mobileModalItem !== null && items[mobileModalItem] && (
-            <div
-              className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/70 px-[5vw] py-4 backdrop-blur-sm"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Visualização ampliada da cesta"
-              onClick={(event) => {
-                if (event.target === event.currentTarget) closeMobileModal();
-              }}
-            >
-              <div className="relative my-auto flex max-h-[calc(100svh-2rem)] w-full max-w-xl flex-col overflow-y-auto rounded-[1.25rem] bg-[var(--surface-elevated)] text-[var(--foreground)] shadow-2xl">
-                <button
-                  type="button"
-                  onClick={closeMobileModal}
-                  aria-label="Fechar visualização"
-                  className="absolute right-3 top-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80"
-                >
-                  <span aria-hidden="true" className="text-2xl leading-none">
-                    ×
-                  </span>
-                </button>
+          {mobileModalItem !== null &&
+            items[mobileModalItem] &&
+            typeof document !== "undefined" &&
+            createPortal(
+              <div
+                className="hxs-modal-backdrop bg-black/70 backdrop-blur-sm"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Visualização ampliada da cesta"
+                onClick={(event) => {
+                  if (event.target === event.currentTarget) closeMobileModal();
+                }}
+              >
+                <div className="hxs-modal-panel relative flex w-full max-w-xl flex-col overflow-hidden rounded-[1.25rem] bg-[var(--surface-elevated)] text-[var(--foreground)] shadow-2xl">
+                  <button
+                    type="button"
+                    onClick={closeMobileModal}
+                    aria-label="Fechar visualização"
+                    className="absolute right-3 top-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black/80"
+                  >
+                    <span aria-hidden="true" className="text-2xl leading-none">
+                      ×
+                    </span>
+                  </button>
 
-                <div className="relative flex min-h-0 items-center justify-center bg-black/10 p-3">
-                  <img
-                    src={items[mobileModalItem].image}
-                    alt={items[mobileModalItem].alt ?? "Imagem da cesta"}
-                    className="max-h-[45svh] w-full rounded-[0.9rem] object-contain"
-                  />
-                </div>
+                  <div className="hxs-modal-media relative flex min-h-0 shrink-0 items-center justify-center bg-black/10 p-3">
+                    <img
+                      src={items[mobileModalItem].image}
+                      alt={items[mobileModalItem].alt ?? "Imagem da cesta"}
+                      className="max-h-[55dvh] w-full rounded-[0.9rem] object-contain"
+                    />
+                  </div>
 
-                <div className="space-y-3 overflow-y-auto px-5 pb-5 pt-4">
-                  <p className="text-[0.7rem] uppercase tracking-[0.16em] text-[var(--gold-ink)]">
-                    {String(mobileModalItem + 1).padStart(2, "0")} /{" "}
-                    {String(items.length).padStart(2, "0")}
-                  </p>
-                  <h3 className="font-display text-2xl leading-tight">{title}</h3>
-                  <p className="text-sm leading-relaxed text-[var(--muted-foreground)]">
-                    {items[mobileModalItem].caption ?? items[mobileModalItem].alt}
-                  </p>
-                  <div className="flex items-center justify-between gap-3 pt-1">
-                    <button
-                      type="button"
-                      onClick={() => moveMobileModal(-1)}
-                      className="btn btn-premium-outline btn-sm"
-                      aria-label="Imagem anterior"
-                    >
-                      ← Anterior
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => moveMobileModal(1)}
-                      className="btn btn-premium btn-sm"
-                      aria-label="Próxima imagem"
-                    >
-                      Próxima →
-                    </button>
+                  <div className="space-y-3 overflow-y-auto px-5 pb-5 pt-4">
+                    <p className="text-[0.7rem] uppercase tracking-[0.16em] text-[var(--gold-ink)]">
+                      {String(mobileModalItem + 1).padStart(2, "0")} /{" "}
+                      {String(items.length).padStart(2, "0")}
+                    </p>
+                    <h3 className="font-display text-2xl leading-tight">{title}</h3>
+                    <p className="text-sm leading-relaxed text-[var(--muted-foreground)]">
+                      {items[mobileModalItem].caption ?? items[mobileModalItem].alt}
+                    </p>
+                    <div className="flex items-center justify-between gap-3 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => moveMobileModal(-1)}
+                        className="btn btn-premium-outline btn-sm"
+                        aria-label="Imagem anterior"
+                      >
+                        ← Anterior
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => moveMobileModal(1)}
+                        className="btn btn-premium btn-sm"
+                        aria-label="Próxima imagem"
+                      >
+                        Próxima →
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          )}
+              </div>,
+              document.body,
+            )}
         </div>
       </div>
     );
   }
 
-  return (
+  const desktopView = (
     <div
       ref={rootRef}
-      className={`hxs-gsap-flip-card relative w-full min-h-svh overflow-hidden ${className}`}
+      className={`hxs-gsap-flip-card w-full overflow-hidden ${opened ? "fixed inset-0 z-[100] h-[100dvh] max-h-[100dvh]" : "relative min-h-svh"} ${className}`}
       style={{ background: backgroundColor, color: textColor }}
+      role={opened ? "dialog" : undefined}
+      aria-modal={opened || undefined}
+      aria-label={opened ? "Galeria de fotografias" : undefined}
     >
+      {opened && (
+        <button
+          type="button"
+          onClick={close}
+          aria-label="Fechar galeria"
+          className="absolute right-5 top-5 z-[110] inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-2xl leading-none text-white shadow-lg transition-colors hover:bg-black/80"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      )}
       {showCounter && (
         <div
           className="absolute top-[2.22vw] left-[2.78vw] text-[0.9vw] tracking-[0.02em] z-60 animate-fade-in"
@@ -671,13 +711,13 @@ export default function GsapFlipCard({
         onClick={(e) => {
           if (e.target === e.currentTarget) close();
         }}
-        className={`relative w-full min-h-svh ${opened ? "cursor-pointer" : "cursor-default"}`}
+        className={`relative w-full ${opened ? "h-full min-h-0" : "min-h-svh"} ${opened ? "cursor-pointer" : "cursor-default"}`}
       >
         <div
           className={`absolute top-1/2 -translate-y-1/2 max-w-[22.22vw] z-30 pointer-events-none ${
             isNarrow ? "hidden" : "block"
           }`}
-          style={{ ...chromeStyle, left: railX + tW + Math.max(48, stageWidth * 0.06) }}
+          style={{ ...chromeStyle, left: railX + tW + Math.max(48, layoutWidth * 0.06) }}
         >
           <h2 className="text-[3.2vw] leading-[1.05] font-normal tracking-[-0.02em] m-0">
             {title}
@@ -729,4 +769,8 @@ export default function GsapFlipCard({
       </div>
     </div>
   );
+
+  return opened && typeof document !== "undefined"
+    ? createPortal(desktopView, document.body)
+    : desktopView;
 }

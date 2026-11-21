@@ -127,7 +127,7 @@ function RootComponent() {
         target="_blank"
         rel="noreferrer"
         aria-label="Falar com a Pausa & Paladar pelo WhatsApp"
-        className="fixed bottom-5 right-5 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--elevation-3)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 sm:bottom-7 sm:right-7"
+        className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--elevation-3)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 sm:bottom-7 sm:right-7"
       >
         <MessageCircle size={20} aria-hidden="true" />
       </a>

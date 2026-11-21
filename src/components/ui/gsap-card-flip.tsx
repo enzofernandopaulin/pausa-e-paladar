@@ -424,7 +424,8 @@ export default function GsapFlipCard({
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        close();
+        if (mobileModalItem !== null) closeMobileModal();
+        else close();
         return;
       }
       if (!opened || items.length < 2) return;
@@ -438,7 +439,7 @@ export default function GsapFlipCard({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [order, select, close, opened, items.length]);
+  }, [order, select, close, closeMobileModal, mobileModalItem, opened, items.length]);
 
   useEffect(() => {
     if (mobileModalItem === null) return;

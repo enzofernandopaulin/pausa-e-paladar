@@ -570,17 +570,33 @@
 }
 
 /* Keep the 12-column desktop composition, but stack its content on phones. */
-@media (max-width: 767px) {
+/* Phones and tablets use the single-column composition; desktop starts at lg. */
+@media (max-width: 1023px) {
+  .grid-12 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .grid-12 > [class*="col-start-"] {
     grid-column: 1 / -1 !important;
     min-width: 0;
   }
 
-  #a-marca .grid-cols-3 {
+  #personalizacao .grid-cols-3 {
     grid-template-columns: 1fr;
   }
 
-  #a-marca .grid-cols-3 > div {
+  #personalizacao .grid-cols-3 > div {
     text-align: center;
+  }
+
+  /* The category rail may scroll horizontally, but the document itself must not. */
+  [aria-label="Categorias do cardápio"] .section-container {
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  [aria-label="Categorias do cardápio"] .section-container > div {
+    width: max-content;
+    max-width: none;
   }
 }

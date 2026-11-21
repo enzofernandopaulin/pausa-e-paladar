@@ -57,8 +57,8 @@ function Cardapio() {
           aria-label="Categorias do cardápio"
           className="sticky top-20 z-30 border-y border-[var(--border-subtle)] bg-[var(--background)]/95 backdrop-blur-md"
         >
-          <div className="section-container overflow-x-auto">
-            <div className="flex min-w-max items-center gap-7 py-4 text-body-sm">
+          <div className="section-container overflow-x-auto overscroll-x-contain">
+            <div className="flex w-max min-w-full items-center gap-7 py-3.5 text-body-sm sm:py-4">
               {menuSections.map((section, index) => (
                 <a
                   key={section.id}

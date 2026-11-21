@@ -545,6 +545,9 @@ export default function GsapFlipCard({
               <img
                 src={heroItem.image}
                 alt={heroItem.alt ?? ""}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 draggable={false}
                 className="absolute inset-0 h-full w-full rounded-[inherit] object-contain p-2"
               />
@@ -597,6 +600,8 @@ export default function GsapFlipCard({
                   <img
                     src={item.image}
                     alt={item.alt ?? ""}
+                    loading="lazy"
+                    decoding="async"
                     draggable={false}
                     className="absolute inset-0 h-full w-full rounded-[inherit] object-contain p-1"
                   />
@@ -758,8 +763,10 @@ export default function GsapFlipCard({
               style={cardStyle(itemIndex)}
             >
               <img
-                src={item.image}
+                src={opened || isHero ? item.image : undefined}
                 alt={item.alt ?? ""}
+                loading={isHero ? "eager" : "lazy"}
+                decoding="async"
                 draggable={false}
                 className="absolute inset-0 h-full w-full rounded-[inherit] object-contain p-[clamp(0.35rem,0.8vw,0.75rem)]"
               />
